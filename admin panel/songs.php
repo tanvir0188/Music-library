@@ -41,6 +41,47 @@ if (isset($_GET['search'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song List</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+
+        nav {
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            color: #4CAF50;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container a{
+            color:white;
+            text-decoration: none;
+        }
+        .container a:hover{
+            color: #4CAF50;
+        }
+
         #songContainer {
             height: 30%;
             overflow: auto;
@@ -48,19 +89,20 @@ if (isset($_GET['search'])) {
 
         #songList {
             border-collapse: collapse;
-            width: 70%;
-            margin: auto;
+            width: 100%;
+            margin: 20px 0;
+            background-color: #1e1e1e;
         }
 
         #songList th,
         #songList td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            border: 1px solid #333;
+            padding: 12px;
             text-align: left;
         }
 
         #songList th {
-            background-color: #f2f2f2;
+            background-color: #333;
         }
 
         #loader {
@@ -94,43 +136,69 @@ if (isset($_GET['search'])) {
             width: 50%;
             padding: 10px;
             font-size: 16px;
+            background-color: #333;
+            border: 1px solid #555;
+            color: #fff;
         }
+
+        #searchBox::placeholder {
+            color: #888;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        img {
+            border-radius: 4px;
+        }
+
+        
     </style>
 </head>
 
 <body>
 
-    <h2>Song List</h2>
+    <nav>
+        <a href="index.php">Home</a>
+        <a href="addSongForm.html">Add Song</a>
+        <a href="songs.php">Song List</a>
+    </nav>
 
-    <input type="text" id="searchBox" placeholder="Search songs">
+    <div class="container">
+        <h2>Song List</h2>
 
-    <table id="songList" class="song-container">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Artist</th>
-            <th>Image</th>
-        </tr>
-        <?php
-        // Initial offset
-        $offset = 0;
+        <input type="text" id="searchBox" placeholder="Search songs">
 
-        // Fetch initial songs
-        $songsResult = fetchSongs($offset);
+        <table id="songList">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Artist</th>
+                <th>Image</th>
+            </tr>
+            <?php
+            // Initial offset
+            $offset = 0;
 
-        // Display initial songs
-        while ($row = $songsResult->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>{$row['id']}</td>";
-            echo "<td>{$row['name']}</td>";
-            echo "<td><a href='artistSongs.php?artist={$row['artist']}'>{$row['artist']}</a></td>";
-            echo "<td> <img src='{$row['img']}' height = '100' width = '100'></td>";
-            echo "</tr>";
-        }
-        ?>
-    </table>
+            // Fetch initial songs
+            $songsResult = fetchSongs($offset);
 
-    <div id="loader"></div>
+            // Display initial songs
+            while ($row = $songsResult->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>{$row['id']}</td>";
+                echo "<td>{$row['name']}</td>";
+                echo "<td><a href='artistSongs.php?artist={$row['artist']}'>{$row['artist']}</a></td>";
+                echo "<td><img src='{$row['img']}' height='100' width='100'></td>";
+                echo "</tr>";
+            }
+            ?>
+        </table>
+
+        <div id="loader"></div>
+    </div>
 
     <script>
         window.onscroll = function() {
