@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Song</title>
+</head>
+<body>
+    <h2>Add Song</h2>
+    <form action="addSong.php" method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="artist">Artist:</label><br>
+        <input type="text" id="artist" name="artist" required><br><br>
+
+        <label for="spotify_id">Spotify ID:</label><br>
+        <input type="text" id="spotify_id" name="spotify_id" required><br><br>
+
+        <label for="preview">Preview URL:</label><br>
+        <input type="text" id="preview" name="preview"><br><br>
+
+        <label for="image_url">Image URL:</label><br>
+        <input type="text" id="image_url" name="image_url"><br><br>
+
+        <label for="danceability">Danceability:</label><br>
+        <input type="number" id="danceability" name="danceability" min="0" max="1" step="0.001"><br><br>
+
+        <label for="energy">Energy:</label><br>
+        <input type="number" id="energy" name="energy" min="0" max="1" step="0.001"><br><br>
+
+        <label for="loudness">Loudness:</label><br>
+        <input type="number" id="loudness" name="loudness" step="0.001"><br><br>
+
+        <label for="speechiness">Speechiness:</label><br>
+        <input type="number" id="speechiness" name="speechiness" min="0" max="1" step="0.001"><br><br>
+
+        <label for="acousticness">Acousticness:</label><br>
+        <input type="number" id="acousticness" name="acousticness" min="0" max="1" step="0.001"><br><br>
+
+        <label for="instrumentalness">Instrumentalness:</label><br>
+        <input type="number" id="instrumentalness" name="instrumentalness" min="0" max="1" step="0.001"><br><br>
+
+        <label for="liveness">Liveness:</label><br>
+        <input type="number" id="liveness" name="liveness" min="0" max="1" step="0.001"><br><br>
+
+        <label for="valence">Valence:</label><br>
+        <input type="number" id="valence" name="valence" min="0" max="1" step="0.001"><br><br>
+
+        <label for="acousticness_artist">Acousticness (Artist):</label><br>
+        <input type="number" id="acousticness_artist" name="acousticness_artist" min="0" max="1" step="0.000000001"><br><br>
+
+        <label for="danceability_artist">Danceability (Artist):</label><br>
+        <input type="number" id="danceability_artist" name="danceability_artist" min="0" max="1" step="0.000000001"><br><br>
+
+        <label for="energy_artist">Energy (Artist):</label><br>
+        <input type="number" id="energy_artist" name="energy_artist" min="0" max="1" step="0.000000001"><br><br>
+
+        <label for="instrumentalness_artist">Instrumentalness (Artist):</label><br>
+        <input type="number" id="instrumentalness_artist" name="instrumentalness_artist" min="0" max="1" step="0.000000001"><br><br>
+
+        <label for="liveness_artist">Liveness (Artist):</label><br>
+        <input type="number" id="liveness_artist" name="liveness_artist" min="0" max="1" step="0.000000001"><br><br>
+
+        <label for="speechiness_artist">Speechiness (Artist):</label><br>
+        <input type="number" id="speechiness_artist" name="speechiness_artist" min="0" max="1" step="0.000000001"><br><br>
+
+        <label for="valence_artist">Valence (Artist):</label><br>
+        <input type="number" id="valence_artist" name="valence_artist" min="0" max="1" step="0.000000001"><br><br>
+
+        <input type="submit" value="Add Song">
+    </form>
+</body>
+</html>

@@ -20,6 +20,8 @@ function searchSongs($searchQuery)
     return $songsResult;
 }
 
+
+
 // Check if search query is set
 if (isset($_GET['search'])) {
     $search = sanitize($_GET['search']);
