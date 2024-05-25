@@ -164,6 +164,7 @@ if (isset($_GET['search'])) {
         <a href="index.php">Home</a>
         <a href="addSongForm.html">Add Song</a>
         <a href="songs.php">Song List</a>
+        <a href="userList.php">Song List</a>
     </nav>
 
     <div class="container">
