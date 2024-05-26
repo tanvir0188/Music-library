@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require '../db.php';
@@ -100,6 +99,7 @@ if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
             justify-content: space-between;
             gap: 10px;
         }
+
         nav {
             background-color: #1e1e1e;
             padding: 10px 0;
@@ -121,12 +121,15 @@ if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
 
 <body>
     <nav>
-        <a href="index.php">Home</a>
+        <a href="../index.php">Home</a>
         <a href="addSongForm.php">Add Song</a>
         <a href="songs.php">Song List</a>
+        <a href="userList.php">User List</a>
+        <a href="artistList.php">Artist List</a>
+        <a href="../logout.php" style="float:right; margin-right:20px;">Logout</a>
     </nav>
     <div class="container">
-        
+
         <div class="add-song">
             <form action="addSong.php" method="POST">
                 <div class="form-group">

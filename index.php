@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
         .advance-searchbar{
             display: flex;
-            min-height: 100vh;
+            min-height: 80vh;
             
             align-items: center;
             justify-content: center;
@@ -19,6 +24,8 @@
             text-align: center;
             margin-right: 10px;
             border-radius: 5px;
+            color: #fff;
+            background-color: #333;
         }
         .advance-searchbar input[type=submit]{
             height: 45px;
@@ -38,7 +45,12 @@
         <input type="submit" value="Search">
     </div>
     <div class="songlist-container">
-        
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Artist</th>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

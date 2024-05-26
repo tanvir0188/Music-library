@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Streaming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="css/indexStyle.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Music streaming</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Your Library</a></li>
+                <li><a href="#">More</a></li>
+            </ul>
+            <form action="search_action.html" class="search-form">
+                <input type="text" placeholder="Search.." name="search">
+                <input type="submit"><i class="fa fa-search"></i></input>
+            </form>
+        </nav>
+        <div class="auth-buttons">
+            <button class="login-btn" onclick= "window.location.href='login.html'">Login</button>
+            <button class="signup-btn" onclick= "window.location.href='signup.html'">Sign Up</button>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>Welcome to Music streaming</h1>
+            <p>Listen to your favorite songs and podcasts.</p>
+        </section>
+        <section class="content">
+            <section class="playlists">
+                <h2>Featured Playlists</h2>
+                <div class="playlist-container" >
+                    <div class="playlist" id="playlist_1">
+                        <img src="picture/playlist(1).jpg" alt="Playlist 1">
+                        <p >Playlist 1</p>
+                    </div>
+                    <div class="playlist" id="playlist_2">
+                        <img src="picture/playlist(2).jpg" alt="Playlist 2">
+                        <p>Playlist 2</p>
+                    </div>
+                    <div class="playlist" id="playlist_3">
+                        <img src="picture/playlist(3).jpg" alt="Playlist 3">
+                        <p>Playlist 3</p>
+                    </div>
+                </div>
+            </section>
+            <section class="popular-artists">
+                <h2>Popular Artists</h2>
+                <div class="artist-container">
+                    <div class="artist"  id="artist_1">
+                        <img src="picture/Artist(1).jpg" alt="Artist 1">
+                        <p>Artist 1</p>
+                    </div>
+                    <div class="artist"  id="artist_2">
+                        <img src="picture/Artist(2).jpg" alt="Artist 2">
+                        <p>Artist 2</p>
+                    </div>
+                    <div class="artist"  id="artist_3">
+                        <img src="picture/Artist(3).jpg" alt="Artist 3">
+                        <p>Artist 3</p>
+                    </div>
+                </div>
+            </section>
+            <section class="popular-albums">
+                <h2>Popular Albums</h2>
+                <div class="album-container" >
+                    <div class="album" id="album_1">
+                        <img src="picture/Album(1).jpg" alt="Album 1">
+                        <p>Album 1</p>
+                    </div>
+                    <div class="album" id="album_2">
+                        <img src="picture/Album(2).jpg" alt="Album 2">
+                        <p>Album 2</p>
+                    </div>
+                    <div class="album" id="album_3">
+                        <img src="picture/Album(3).jpg" alt="Album 3">
+                        <p>Album 3</p>
+                    </div>
+                </div>
+            </section>
+            <section class="popular-radio">
+                <h2>Popular Radio</h2>
+                <div class="radio-container">
+                    <div class="radio"  id="radio_1">
+                        <img src="picture/Radio(1).jpg" alt="Radio 1">
+                        <p>Atif Islam</p>
+                    </div>
+                    <div class="radio"  id="radio_2">
+                        <img src="picture/Radio(2).jpg" alt="Radio 2">
+                        <p>Arijit singh</p>
+                    </div>
+                    <div class="radio"  id="radio_3">
+                        <img src="picture/Radio(3).png" alt="Radio 3">
+                        <p>Arijit singh</p>
+                    </div>
+                </div>
+            </section>
+            <!-- <section class="featured-charts">
+                <h2>Featured Charts</h2>
+                <div class="chart-container">
+                    <div class="chart">
+                        <img src="chart1.jpg" alt="Chart 1">
+                        <p>Chart 1</p>
+                    </div>
+                    <div class="chart">
+                        <img src="chart2.jpg" alt="Chart 2">
+                        <p>Chart 2</p>
+                    </div>
+                    <div class="chart">
+                        <img src="chart3.jpg" alt="Chart 3">
+                        <p>Chart 3</p>
+                    </div>
+                </div>
+            </section> -->
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-section">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">For the Record</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Communities</h3>
+            <ul>
+                <li><a href="#">For Artists</a></li>
+                <li><a href="#">Developers</a></li>
+                <li><a href="#">Advertising</a></li>
+                <li><a href="#">Investors</a></li>
+                <li><a href="#">Vendors</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Useful links</h3>
+            <ul>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Free Mobile App</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Spotify Plans</h3>
+            <ul>
+                <li><a href="#">Premium Individual</a></li>
+                <li><a href="#">Premium Duo</a></li>
+                <li><a href="#">Premium Family</a></li>
+                <li><a href="#">Premium Student</a></li>
+                <li><a href="#">Spotify Free</a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Spotify AB</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('playlist_1').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('playlist_2').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('playlist_3').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('artist_1').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('artist_2').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('artist_3').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+
+        document.getElementById('album_1').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('album_2').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('album_3').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+
+        document.getElementById('radio_1').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('radio_2').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+        document.getElementById('radio_3').onclick = function() {
+            window.location.href = 'Details.html'; // Replace with your URL
+        };
+
+    </script>
+</body>
+</html>
