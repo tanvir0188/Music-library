@@ -15,108 +15,7 @@ if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Song</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .add-song {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .form-group div {
-            flex: 1 1 calc(50% - 10px);
-        }
-
-        .form-group div.full-width {
-            flex: 1 1 100%;
-        }
-
-        label {
-            font-size: 14px;
-        }
-
-        input[type=text],
-        input[type=number] {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #333;
-            border-radius: 4px;
-            box-sizing: border-box;
-            background-color: #333;
-            color: #ffffff;
-        }
-
-        input[type=submit],
-        .btn-back {
-            width: 48%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        input[type=submit]:hover,
-        .btn-back:hover {
-            background-color: #45a049;
-        }
-
-        .btn-back {
-            background-color: #f44336;
-        }
-
-        .btn-back:hover {
-            background-color: #e53935;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        nav {
-            background-color: #1e1e1e;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-
-        nav a:hover {
-            color: #4CAF50;
-        }
-    </style>
+    <link rel="stylesheet" href="adminStyle.css">
 </head>
 
 <body>
@@ -128,7 +27,7 @@ if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
         <a href="artistList.php">Artist List</a>
         <a href="../logout.php" style="float:right; margin-right:20px;">Logout</a>
     </nav>
-    <div class="container">
+    <div class="form-container">
 
         <div class="add-song">
             <form action="addSong.php" method="POST">

@@ -46,103 +46,12 @@ if (isset($_GET['search'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song List</title>
-    <style>
-        /* Styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
-        nav {
-            background-color: #1e1e1e;
-            padding: 10px 0;
-            text-align: center;
-        }
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        nav a:hover {
-            color: #4CAF50;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .container a {
-            color: white;
-            text-decoration: none;
-        }
-        .container a:hover {
-            color: #4CAF50;
-        }
-        #songContainer {
-            height: 30%;
-            overflow: auto;
-        }
-        #songList {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 20px 0;
-            background-color: #1e1e1e;
-        }
-        #songList th,
-        #songList td {
-            border: 1px solid #333;
-            padding: 12px;
-            text-align: left;
-        }
-        #songList th {
-            background-color: #333;
-        }
-        #loader {
-            display: none;
-            border: 16px solid #f3f3f3;
-            border-top: 16px solid #3498db;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            animation: spin 2s linear infinite;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            margin-top: -60px;
-            margin-left: -60px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        #searchBox {
-            margin: 20px auto;
-            display: block;
-            width: 50%;
-            padding: 10px;
-            font-size: 16px;
-            background-color: #333;
-            border: 1px solid #555;
-            color: #fff;
-        }
-        #searchBox::placeholder {
-            color: #888;
-        }
-        h2 {
-            text-align: center;
-            color: #4CAF50;
-        }
-        img {
-            border-radius: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="adminStyle.css">
+    
 </head>
 <body>
     <nav>
-        <a href="../index.php">Home</a>
+        <a href="index.php">Home</a>
         <a href="addSongForm.php">Add Song</a>
         <a href="songs.php">Song List</a>
         <a href="userList.php">User List</a>
@@ -153,7 +62,7 @@ if (isset($_GET['search'])) {
     <div class="container">
         <h2>Song List</h2>
         <input type="text" id="searchBox" placeholder="Search songs">
-        <table id="songList">
+        <table id="songList" class="default-table">
             <tr>
                 <th>ID</th>
                 <th>Name</th>

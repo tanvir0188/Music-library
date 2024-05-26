@@ -8,9 +8,9 @@ if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
 }
 
 // Function to fetch artists based on offset
-function fetchArtists($offset) {
+function fetchArtistsWithSongCount($offset) {
     global $conn;
-    $artistsQuery = "SELECT DISTINCT artist FROM songs LIMIT 20 OFFSET $offset";
+    $artistsQuery = "SELECT artist, COUNT(*) AS song_count FROM songs GROUP BY artist LIMIT 20 OFFSET $offset";
     $artistResult = $conn->query($artistsQuery);
     return $artistResult;
 }
@@ -29,11 +29,11 @@ $offset = 0;
 
 // Check if search query is set
 if (isset($_GET['search'])) {
-    $search = $_GET['search']; // Assume sanitize function is defined elsewhere
+    $search = $_GET['search'];
     $artistsResult = searchArtists($search);
 } else {
     // Fetch initial artists
-    $artistsResult = fetchArtists($offset);
+    $artistsResult = fetchArtistsWithSongCount($offset);
 }
 ?>
 
@@ -43,99 +43,7 @@ if (isset($_GET['search'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artist List</title>
-    <style>
-        /* Styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
-        nav {
-            background-color: #1e1e1e;
-            padding: 10px 0;
-            text-align: center;
-        }
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        nav a:hover {
-            color: #4CAF50;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .container a {
-            color: white;
-            text-decoration: none;
-        }
-        .container a:hover {
-            color: #4CAF50;
-        }
-        #artistContainer {
-            height: 30%;
-            overflow: auto;
-        }
-        #artistList {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 20px 0;
-            background-color: #1e1e1e;
-        }
-        #artistList th,
-        #artistList td {
-            border: 1px solid #333;
-            padding: 12px;
-            text-align: left;
-        }
-        #artistList th {
-            background-color: #333;
-        }
-        #loader {
-            display: none;
-            border: 16px solid #f3f3f3;
-            border-top: 16px solid #3498db;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            animation: spin 2s linear infinite;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            margin-top: -60px;
-            margin-left: -60px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        #searchBox {
-            margin: 20px auto;
-            display: block;
-            width: 50%;
-            padding: 10px;
-            font-size: 16px;
-            background-color: #333;
-            border: 1px solid #555;
-            color: #fff;
-        }
-        #searchBox::placeholder {
-            color: #888;
-        }
-        h2 {
-            text-align: center;
-            color: #4CAF50;
-        }
-        img {
-            border-radius: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="adminStyle.css">
 </head>
 <body>
     <nav>
@@ -150,15 +58,17 @@ if (isset($_GET['search'])) {
     <div class="container">
         <h2>Artist List</h2>
         <input type="text" id="searchBox" placeholder="Search artists">
-        <table id="artistList">
+        <table id="artistList" class="default-table">
             <tr>
                 <th>Artist</th>
+                <th>Total Songs</th> <!-- New column header -->
             </tr>
             <?php
-            // Display initial artists
+            // Display initial artists with song count
             while ($row = $artistsResult->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td><a href='artistSongs.php?artist=" . urlencode($row['artist']) . "'>{$row['artist']}</a></td>";
+                echo "<td>{$row['song_count']}</td>"; // Display song count
                 echo "</tr>";
             }
             ?>

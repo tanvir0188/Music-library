@@ -21,71 +21,7 @@ $userListResult = $conn->query($userListQuery);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
-    <style>
-        /* Add your CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .container a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .container a:hover {
-            color: #4CAF50;
-        }
-
-        #userList {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 20px 0;
-            background-color: #1e1e1e;
-        }
-
-        #userList th,
-        #userList td {
-            border: 1px solid #333;
-            padding: 12px;
-            text-align: left;
-        }
-
-        #userList th {
-            background-color: #333;
-        }
-
-        nav {
-            background-color: #1e1e1e;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-
-        nav a:hover {
-            color: #4CAF50;
-        }
-
-        h2 {
-            text-align: center;
-            color: #4CAF50;
-        }
-    </style>
+    <link rel="stylesheet" href="adminStyle.css">
 </head>
 
 <body>
@@ -100,7 +36,7 @@ $userListResult = $conn->query($userListQuery);
 
     <div class="container">
         <h2>User List</h2>
-        <table id="userList">
+        <table id="userList" class="default-table">
             <tr>
                 <th>ID</th>
                 <th>Username</th>
