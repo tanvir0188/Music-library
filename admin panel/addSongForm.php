@@ -1,3 +1,14 @@
+
+<?php
+session_start();
+require '../db.php';
+
+if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
+    header("Location: ../loginAnd signup.html");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,7 +122,7 @@
 <body>
     <nav>
         <a href="index.php">Home</a>
-        <a href="addSongForm.html">Add Song</a>
+        <a href="addSongForm.php">Add Song</a>
         <a href="songs.php">Song List</a>
     </nav>
     <div class="container">

@@ -1,22 +1,27 @@
 <?php
 include '../db.php';
 
-// Check if artist parameter is set
+
+
+// Check if artist and offset parameters are set
 if (isset($_GET['artist']) && isset($_GET['offset'])) {
     $artist = sanitize($_GET['artist']);
-    $offset = (int)$_GET['offset'];
+    $offset = (int)sanitize($_GET['offset']);
 
     // Fetch additional songs by the specified artist
-    $artistSongsQuery = "SELECT * FROM songs WHERE artist = '$artist' LIMIT 20 OFFSET $offset";
-    $artistSongsResult = $conn->query($artistSongsQuery);
+    $artistSongsQuery = "SELECT * FROM songs WHERE artist = ? LIMIT 20 OFFSET ?";
+    $stmt = $conn->prepare($artistSongsQuery);
+    $stmt->bind_param("si", $artist, $offset);
+    $stmt->execute();
+    $artistSongsResult = $stmt->get_result();
 
     // Prepare the HTML response
     $response = '';
     while ($row = $artistSongsResult->fetch_assoc()) {
         $response .= "<tr>";
-        $response .= "<td>{$row['id']}</td>";
-        $response .= "<td>{$row['name']}</td>";
-        $response .= "<td> <img src='{$row['img']}' height='100' width='100'></td>";
+        $response .= "<td>" . htmlspecialchars($row['id']) . "</td>";
+        $response .= "<td>" . htmlspecialchars($row['name']) . "</td>";
+        $response .= "<td><img src='" . htmlspecialchars($row['img']) . "' height='100' width='100'></td>";
         $response .= "</tr>";
     }
 
