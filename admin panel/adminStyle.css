@@ -86,8 +86,7 @@ nav a:hover {
 
 .advance-searchbar {
     display: flex;
-    min-height: 80vh;
-
+    min-height: 30vh;
     align-items: center;
     justify-content: center;
 }
@@ -111,6 +110,14 @@ nav a:hover {
 
 .advance-searchbar input[type=submit]:hover {
     background-color: #45a049;
+}
+
+.advance-searchbar form{
+    width: 100%;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
@@ -278,4 +285,52 @@ input[type=submit]:hover,
     display: flex;
     justify-content: space-between;
     gap: 10px;
+}
+
+.songlist-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+
+}
+
+.song-card {
+    background-color: #1e1e1e;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.song-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.song-card h3 {
+    color: #fff;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.song-card p {
+    color: #ccc;
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+.see-more {
+    text-align: right;
+    margin: 10px;
+}
+
+.see-more a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.see-more a:hover {
+    color: #45a049;
 }

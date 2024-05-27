@@ -47,7 +47,7 @@ if (isset($_GET['search'])) {
 </head>
 <body>
     <nav>
-        <a href="../index.php">Home</a>
+        <a href="index.php">Home</a>
         <a href="addSongForm.php">Add Song</a>
         <a href="songs.php">Song List</a>
         <a href="userList.php">User List</a>
