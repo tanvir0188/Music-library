@@ -39,8 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             echo "Login successful!";
-            // Redirect to a protected page
-            header("Location: songs.php");
+            // Redirect based on usertype
+            if ($usertype === 'admin') {
+                header("Location: ../admin panel/index.php");
+            } else {
+                header("Location: ../users/index.php");
+            }
             exit();
         } else {
             echo "Invalid password.";
