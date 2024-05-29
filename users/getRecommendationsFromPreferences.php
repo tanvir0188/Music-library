@@ -30,7 +30,7 @@ $convertedPreferences = [
 ];
 
 function normalizeLoudness($loudness) {
-    // Normalize loudness assuming it ranges from -60 dB to 0 dB
+    // Normalization assuming loudness ranges from -60 dB to 0 dB
     return ($loudness + 60) / 60;
 }
 

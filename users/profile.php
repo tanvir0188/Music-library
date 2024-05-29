@@ -55,6 +55,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="css/details.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
         .profile-header {
             display: flex;
             align-items: center;
@@ -99,15 +112,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="sidebar">
         <ul>
             <li><a href="index.php">Home</a></li>
-            <li><a href="search_results.php">Search</a></li>
+            <li><a href="#">Search</a></li>
             <li><a href="#">Your Library</a></li>
-            
+            <li><a href="profile.php">More</a></li>
         </ul>
     </div>
 
     <div class="main-content">
         <div class="profile-header">
-            
+            <img src="picture/Artist(1).jpg" alt="Profile Photo" width="100">
             <div>
                 <h1><?php echo htmlspecialchars($username); ?></h1>
                 <p><?php echo htmlspecialchars($usertype); ?></p>
