@@ -10,8 +10,8 @@
 <body>
     <div class="sidebar">
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#">Search</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="search_results.php">Search</a></li>
             <li><a href="#">Your Library</a></li>
             <li><a href="profile.php">More</a></li>
         </ul>

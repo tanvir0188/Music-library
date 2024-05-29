@@ -99,9 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="sidebar">
         <ul>
             <li><a href="index.php">Home</a></li>
-            <li><a href="search_action.html">Search</a></li>
+            <li><a href="search_results.php">Search</a></li>
             <li><a href="#">Your Library</a></li>
-            <li><a href="profile.php">More</a></li>
+            
         </ul>
     </div>
 

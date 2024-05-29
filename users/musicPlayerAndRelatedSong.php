@@ -123,13 +123,7 @@ $sameArtistSongCount = count($sameArtistSongs);
                     <?php endif; ?>
                 </div>
                 <table>
-                    <thead>
-                    <tr>
-                            <th>Song</th>
-                            
-                            <th>Preview</th>
-                        </tr>
-                    </thead>
+                    
                     <tbody>
                         <?php foreach ($relatedSongs as $relatedSong) : ?>
                             <tr>
@@ -140,13 +134,13 @@ $sameArtistSongCount = count($sameArtistSongs);
                                         </div>
                                         <div class="content">
                                             <b><a href="?songId=<?php echo $relatedSong['id']; ?>"><?php echo htmlspecialchars($relatedSong['name']); ?></a></b><br>
-                                            <?php echo htmlspecialchars($relatedSong['artist']); ?>
+                                            <a href="artistDetails.php?artist=<?php echo urlencode($relatedSong['artist']); ?>"><?php echo htmlspecialchars($relatedSong['artist']); ?></a>
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <td style="text-align: end">
                                     <?php if ($relatedSong['preview']) : ?>
-                                        <audio controls>
+                                        <audio controls >
                                             <source src="<?php echo htmlspecialchars($relatedSong['preview']); ?>" type="audio/mpeg">
                                             Your browser does not support the audio element.
                                         </audio>
@@ -157,25 +151,18 @@ $sameArtistSongCount = count($sameArtistSongs);
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
-                </table>
 
+                </table>
             </div>
 
             <div id="song-from-same-artist" class="song-table">
                 <h3>Songs from the same artist</h3>
 
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Song</th>
-                            
-                            <th>Preview</th>
-                        </tr>
-                    </thead>
+                    
                     <tbody>
                         <?php foreach ($sameArtistSongs as $sameArtistSong) : ?>
                             <tr>
-
                                 <td style="text-align: start;">
                                     <div class="song-td">
                                         <div class="image">
@@ -183,12 +170,12 @@ $sameArtistSongCount = count($sameArtistSongs);
                                         </div>
                                         <div class="content">
                                             <b><a href="?songId=<?php echo $sameArtistSong['id']; ?>"><?php echo htmlspecialchars($sameArtistSong['name']); ?></a></b><br>
-                                            <?php echo htmlspecialchars($sameArtistSong['artist']); ?>
+                                            <a href="artistDetails.php?artist=<?php echo urlencode($sameArtistSong['artist']); ?>"><?php echo htmlspecialchars($sameArtistSong['artist']); ?></a>
                                         </div>
                                     </div>
                                 </td>
-                                
-                                <td>
+
+                                <td style="text-align: end">
                                     <?php if ($sameArtistSong['preview']) : ?>
                                         <audio controls>
                                             <source src="<?php echo htmlspecialchars($sameArtistSong['preview']); ?>" type="audio/mpeg">
