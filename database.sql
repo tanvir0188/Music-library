@@ -62,4 +62,23 @@ CREATE TABLE playlist_songs (
     FOREIGN KEY (song_id) REFERENCES songs(id)
 );
 
+CREATE TABLE favorite_songs (
+    user_id INT NOT NULL,
+    song_id INT NOT NULL,
+    PRIMARY KEY (user_id, song_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (song_id) REFERENCES songs(id) ON DELETE CASCADE
+);
+
+DELIMITER //
+CREATE TRIGGER increment_popularity AFTER INSERT ON favorite_songs
+FOR EACH ROW
+BEGIN
+    UPDATE songs
+    SET popularity = popularity + 1
+    WHERE id = NEW.song_id;
+END;
+//
+DELIMITER ;
+
 
