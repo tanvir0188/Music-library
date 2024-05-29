@@ -25,7 +25,7 @@ function fetchArtistImage($artist) {
 // Function to fetch songs by artist
 function fetchSongsByArtist($artist) {
     global $conn;
-    $query = "SELECT name, img FROM songs WHERE artist = ?";
+    $query = "SELECT name, img, preview FROM songs WHERE artist = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $artist);
     $stmt->execute();
@@ -75,16 +75,25 @@ $songs = fetchSongsByArtist($artist);
                 <thead>
                     <tr>
                         <th>Song</th>
-                        
                         <th>Image</th>
+                        <th>Mp3</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($row = $songs->fetch_assoc()): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($row['name']); ?></td>
-                            
                             <td><img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>" width="50"></td>
+                            <td>
+                                <?php if ($row['preview']) : ?>
+                                    <audio controls>
+                                        <source src="<?php echo htmlspecialchars($row['preview']); ?>" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                <?php else : ?>
+                                    No preview available
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

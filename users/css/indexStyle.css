@@ -1,8 +1,8 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
     background-color: #121212;
     color: #ffffff;
+    margin: 0;
 }
 
 header {
@@ -91,6 +91,8 @@ header .auth-buttons .signup-btn {
 
 main {
     padding: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .hero {
@@ -163,11 +165,45 @@ section h2 {
 .album p,
 .radio p,
 .chart p {
-    position: absolute; /* Set position to absolute */
-    bottom: 0; /* Adjust bottom spacing as needed */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
+    position: absolute;
+    /* Set position to absolute */
+    bottom: 0;
+    /* Adjust bottom spacing as needed */
+    left: 50%;
+    /* Center horizontally */
+    transform: translateX(-50%);
+    /* Center horizontally */
     font-size: 16px;
+}
+
+.artist a,
+.playlists a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.artist a:hover,
+.playlists a:hover {
+    color: #00848a;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+
+nav a:hover {
+    color: black;
+}
+.auth-buttons a {
+    text-decoration: none;
+    color: #fff;
+}
+
+
+.auth-buttons a:hover {
+    color: black;
 }
 
 footer {
@@ -176,6 +212,8 @@ footer {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .footer-section {
@@ -208,4 +246,55 @@ footer {
     text-align: center;
     margin-top: 20px;
     color: #b3b3b3;
+}
+
+.search-results{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
+
+}
+.search-results table{
+    width: 100%;
+}
+.search-results th, td{
+    text-align: center;
+}
+
+audio {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    
+    border-radius: 5px;
+    padding: 5px;
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: #333;
+    color: #fff;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button,
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-timeline,
+audio::-webkit-media-controls-volume-slider-container,
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display,
+audio::-webkit-media-controls-fullscreen-button {
+    filter: invert(100%);
+}
+
+audio::-moz-media-controls {
+    background-color: #333;
+    color: #fff;
+}
+
+audio::-moz-media-controls-enclosure {
+    background-color: #333;
+    color: #fff;
 }

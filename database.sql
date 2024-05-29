@@ -51,7 +51,7 @@ CREATE TABLE playlists (
     name VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE playlist_songs (
@@ -61,4 +61,5 @@ CREATE TABLE playlist_songs (
     FOREIGN KEY (playlist_id) REFERENCES playlists(id) ON DELETE CASCADE,
     FOREIGN KEY (song_id) REFERENCES songs(id)
 );
+
 

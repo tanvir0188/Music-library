@@ -80,7 +80,7 @@ if ($userLoggedIn) {
             return $a['similarity'] <=> $b['similarity'];
         });
 
-        $recommendations = array_slice($recommendations, 0, 10);
+        $recommendations = array_slice($recommendations, 0, 5);
     }
 }
 
@@ -116,21 +116,21 @@ if ($userLoggedIn) {
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
-                <li><a href="#">Your Library</a></li>
-                <li><a href="#">More</a></li>
+                <li><a href="Details.php">Your Library</a></li>
+
             </ul>
             <form action="search_action.php" class="search-form" method="GET">
                 <input type="text" placeholder="Search.." name="search">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
+
         </nav>
         <div class="auth-buttons">
             <?php if (!$userLoggedIn) : ?>
-                <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
-                <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
+                <button class="login-btn" onclick="window.location.href='../loginAnd signup.html'">Login</button>
+                <button class="signup-btn" onclick="window.location.href='../loginAnd signup.html'">Sign Up</button>
             <?php else : ?>
-                <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
-                <button class="login-btn" onclick="window.location.href='logout.php'">Logout</button>
+                <span>Welcome, <a href="profile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a></span>
             <?php endif; ?>
         </div>
     </header>
@@ -162,18 +162,18 @@ if ($userLoggedIn) {
                     <?php endwhile; ?>
                 </div>
             </section>
-            <?php if ($userLoggedIn): ?>
+            <?php if ($userLoggedIn) : ?>
                 <section class="popular-artists">
                     <h2>Recommended Songs</h2>
                     <div class="artist-container">
-                        <?php if ($preferences): ?>
-                            <?php foreach ($recommendations as $song): ?>
+                        <?php if ($preferences) : ?>
+                            <?php foreach ($recommendations as $song) : ?>
                                 <div class="artist" id="song_<?php echo $song['id']; ?>">
                                     <img src="<?php echo htmlspecialchars($song['img']); ?>" alt="<?php echo htmlspecialchars($song['name']); ?>">
                                     <p><?php echo htmlspecialchars($song['name']); ?></p>
                                 </div>
                             <?php endforeach; ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             <p>Please <a href="preferenceForm.php">fill out your preferences</a> to get song recommendations.</p>
                         <?php endif; ?>
                     </div>

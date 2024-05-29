@@ -13,7 +13,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="#">Search</a></li>
             <li><a href="#">Your Library</a></li>
-            <li><a href="#">More</a></li>
+            <li><a href="profile.php">More</a></li>
         </ul>
     </div>
 
