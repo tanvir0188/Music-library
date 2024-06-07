@@ -24,7 +24,6 @@ function searchSongs($searchQuery) {
     return $songsResult;
 }
 
-// Sanitize input
 
 
 // Initial offset
@@ -47,7 +46,6 @@ if (isset($_GET['search'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song List</title>
     <link rel="stylesheet" href="adminStyle.css">
-    
 </head>
 <body>
     <nav>
@@ -61,7 +59,14 @@ if (isset($_GET['search'])) {
 
     <div class="container">
         <h2>Song List</h2>
-        <input type="text" id="searchBox" placeholder="Search songs">
+        
+
+        <div class="advance-searchbar">
+            <form action="songs.php" method="GET">
+                <input type="text" id="searchBox" name="search" placeholder="Search any song or artist" required>
+                <input type="submit" value="Search">
+            </form>
+        </div>
         <table id="songList" class="default-table">
             <tr>
                 <th>ID</th>
@@ -108,27 +113,6 @@ if (isset($_GET['search'])) {
                 xhr.send();
             }
         };
-
-        document.getElementById("searchBox").addEventListener("keyup", function() {
-            var input, filter, table, tr, tdName, tdArtist, i, txtValueName, txtValueArtist;
-            input = document.getElementById("searchBox");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("songList");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                tdName = tr[i].getElementsByTagName("td")[1];
-                tdArtist = tr[i].getElementsByTagName("td")[2];
-                if (tdName && tdArtist) {
-                    txtValueName = tdName.textContent || tdName.innerText;
-                    txtValueArtist = tdArtist.textContent || tdArtist.innerText;
-                    if (txtValueName.toUpperCase().indexOf(filter) > -1 || txtValueArtist.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        });
     </script>
 </body>
 </html>
