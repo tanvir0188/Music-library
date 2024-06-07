@@ -61,6 +61,7 @@ function calculateSimilarity($song, $preferences)
 
 $userLoggedIn = isset($_SESSION['userid']);
 $recommendations = [];
+$fullRecommendation = [];
 
 if ($userLoggedIn) {
     $userId = $_SESSION['userid'];
@@ -80,17 +81,18 @@ if ($userLoggedIn) {
             return $a['similarity'] <=> $b['similarity'];
         });
 
+        $fullRecommendation=$recommendations;
         $recommendations = array_slice($recommendations, 0, 5);
     }
 }
 
 
-// Fetch top 5 popular songs
+
 $popularSongs = fetchPopularSongs(5);
-// Fetch top 5 popular artists
+
 $popularArtists = fetchPopularArtists(5);
 
-// Check if user is logged in
+
 $userLoggedIn = isset($_SESSION['userid']);
 $preferences = null;
 if ($userLoggedIn) {

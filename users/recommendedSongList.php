@@ -2,39 +2,74 @@
 session_start();
 require '../db.php'; // Update the path if necessary
 
-$artist = isset($_GET['artist']) ? $_GET['artist'] : '';
+// Check if the user is logged in
+$userLoggedIn = isset($_SESSION['userid']);
+$fullRecommendation = [];
 
-if (!$artist) {
-    echo "No artist specified.";
-    exit();
+if ($userLoggedIn) {
+    $userId = $_SESSION['userid'];
+    $preferences = fetchUserPreferences($userId, $conn);
+    $songs = fetchSongs($conn);
+
+    if ($preferences) {
+        while ($song = $songs->fetch_assoc()) {
+            $song['loudness'] = normalizeLoudness($song['loudness']);
+            $song['instrumentalness'] = normalizeInstrumentalness($song['instrumentalness']);
+            $similarity = calculateSimilarity($song, $preferences);
+            $song['similarity'] = $similarity;
+            $fullRecommendation[] = $song;
+        }
+
+        usort($fullRecommendation, function ($a, $b) {
+            return $a['similarity'] <=> $b['similarity'];
+        });
+
+        $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
+        $limit = 50;
+        $totalSongs = count($fullRecommendation);
+        $recommendations = array_slice($fullRecommendation, $offset, $limit);
+    }
 }
 
-// Function to fetch the artist's image
-function fetchArtistImage($artist)
+function fetchUserPreferences($userId, $conn)
 {
-    global $conn;
-    $query = "SELECT img FROM songs WHERE artist = ? GROUP BY img ORDER BY COUNT(*) DESC LIMIT 1";
+    $query = "SELECT * FROM preferences WHERE user_id = ? ORDER BY id DESC LIMIT 1";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $artist);
+    $stmt->bind_param('i', $userId);
     $stmt->execute();
-    $stmt->bind_result($img);
-    $stmt->fetch();
-    $stmt->close();
-    return $img;
+    return $stmt->get_result()->fetch_assoc();
 }
 
-// Function to fetch songs by artist
-function fetchSongsByArtist($artist)
+function fetchSongs($conn)
 {
-    global $conn;
-    $query = "SELECT id, name, img, preview FROM songs WHERE artist = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $artist);
-    $stmt->execute();
-    return $stmt->get_result();
+    $query = "SELECT * FROM songs";
+    return $conn->query($query);
 }
 
-// Function to check if a song is a favorite
+function normalizeLoudness($loudness)
+{
+    return ($loudness + 60) / 60;
+}
+
+function normalizeInstrumentalness($instrumentalness)
+{
+    return log1p($instrumentalness);
+}
+
+function calculateSimilarity($song, $preferences)
+{
+    return sqrt(
+        pow($song['danceability'] - $preferences['danceability'], 2) +
+            pow($song['energy'] - $preferences['energy'], 2) +
+            pow($song['loudness'] - normalizeLoudness($preferences['loudness']), 2) +
+            pow($song['speechiness'] - $preferences['speechiness'], 2) +
+            pow($song['acousticness'] - $preferences['acousticness'], 2) +
+            pow($song['instrumentalness'] - normalizeInstrumentalness($preferences['instrumentalness']), 2) +
+            pow($song['liveness'] - $preferences['liveness'], 2) +
+            pow($song['valence'] - $preferences['valence'], 2)
+    );
+}
+
 function isFavorite($user_id, $song_id, $conn)
 {
     $query = "SELECT * FROM favorite_songs WHERE user_id = ? AND song_id = ?";
@@ -44,23 +79,17 @@ function isFavorite($user_id, $song_id, $conn)
     $result = $stmt->get_result();
     return $result->num_rows > 0;
 }
-
-// Fetch artist image
-$artistImage = fetchArtistImage($artist);
-
-// Fetch songs by the artist
-$songs = fetchSongsByArtist($artist);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($artist); ?> - Songs</title>
+    <title>Recommended Songs</title>
     <link rel="stylesheet" href="css/details.css">
     <style>
+        /* Existing styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #181818;
@@ -100,23 +129,6 @@ $songs = fetchSongsByArtist($artist);
         .main-content {
             margin-left: 220px;
             padding: 20px;
-        }
-
-        .artist-header {
-            display: flex;
-            align-items: center;
-            background-color: #282828;
-        }
-
-        .artist-header h1 {
-            color: #fff;
-        }
-
-        .artist-header img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-right: 20px;
         }
 
         .container {
@@ -226,59 +238,48 @@ $songs = fetchSongsByArtist($artist);
         </ul>
     </div>
     <div class="main-content">
-        <div class="artist-header">
-            <img src="<?php echo htmlspecialchars($artistImage); ?>" alt="<?php echo htmlspecialchars($artist); ?>">
-            <div>
-                <h1><?php echo htmlspecialchars($artist); ?></h1>
-                <p>Popular songs by <?php echo htmlspecialchars($artist); ?></p>
-            </div>
-        </div>
         <div class="container">
             <div class="title-bar">
-                <h1>Songs</h1>
-                <div class="icons">
-                    <i class="fas fa-heart"></i>
-                    <i class="fas fa-share-alt"></i>
-                </div>
+                <h1>Recommended Songs</h1>
             </div>
             <table>
                 <thead>
                     <tr>
                         <th>Song</th>
-                        <th>Image</th>
-                        <th>Mp3</th>
+
+                        <th>Preview</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php while ($row = $songs->fetch_assoc()) : ?>
-                        <?php $isFavorite = isset($_SESSION['userid']) ? isFavorite($_SESSION['userid'], $row['id'], $conn) : false; ?>
-                        <tr id="song_<?php echo $row['id']; ?>">
+                <tbody id="song-table-body">
+                    <?php foreach ($recommendations as $song) : ?>
+                        <?php $isFavorite = isFavorite($userId, $song['id'], $conn); ?>
+                        <tr id="song_<?php echo $song['id']; ?>">
                             <td style="display: flex; align-items: center;">
-                                <a href="musicPlayerAndRelatedSong.php?songId=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['name']); ?></a>
-                                <form method="post" action="insertFavorite.php" style="margin-left: 10px;">
-                                    <input type="hidden" name="song_id" value="<?php echo $row['id']; ?>">
+                                <img style="margin-right: 5px;" src="<?php echo htmlspecialchars($song['img']); ?>" alt="Song Image" width="50">
+                                <a href="musicPlayerAndRelatedSong.php?songId=<?php echo $song['id']; ?>"><?php echo htmlspecialchars($song['name']); ?></a>
+                                <form method="post" action="insertFavorite.php">
+                                    <input type="hidden" name="song_id" value="<?php echo $song['id']; ?>">
                                     <button type="submit" class="btn <?php echo $isFavorite ? 'favorite' : ''; ?>">
                                         <svg viewBox="0 0 17.503 15.625" height="20.625" width="20.503" xmlns="http://www.w3.org/2000/svg" class="icon">
-                                            <path transform="translate(0 0)" d="M8.752,15.625h0L1.383,8.162a4.824,4.824,0,0,1,0-6.762,4.679,4.679,0,0,1,6.674,0l.694.7.694-.7a4.678,4.678,0,0,1,6.675,0,4.825,4.825,0,0,1,0,6.762L8.752,15.624ZM4.72,1.25A3.442,3.442,0,0,0,2.277,2.275a3.562,3.562,0,0,0,0,5l6.475,6.556,6.475-6.556a3.563,3.563,0,0,0,0-5A3.443,3.443,0,0,0,12.786,1.25h-.01a3.415,3.415,0,0,0-2.443,1.038L8.752,3.9,7.164,2.275A3.442,3.442,0,0,0,4.72,1.25Z" id="Fill"></path>
+                                            <path transform="translate(0 0)" d="M8.752,15.625h0L1.383,8.162a4.824,4.824,0,0,1,0-6.762,4.679,4.679,0,0,1,6.674,0l.694.7.694-.7a4.678,4.678,0,0,1,6.675,0,4.825,4.825,0,0,1,0,6.762L8.752,15.624ZM4.72,1.25A3.442,3.442,0,0,0,2.207,2.286a3.542,3.542,0,0,0,0,4.97L8.752,13,15.3,7.256a3.542,3.542,0,0,0,0-4.97,3.545,3.545,0,0,0-4.974,0l-1.39,1.4L6.109,2.286A3.442,3.442,0,0,0,4.72,1.25Z"></path>
                                         </svg>
                                     </button>
                                 </form>
                             </td>
-                            <td><img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>" width="50"></td>
-                            <td>
-                                <?php if ($row['preview']) : ?>
-                                    <audio controls>
-                                        <source src="<?php echo htmlspecialchars($row['preview']); ?>" type="audio/mpeg">
-                                        Your browser does not support the audio element.
-                                    </audio>
-                                <?php else : ?>
-                                    No preview available
-                                <?php endif; ?>
-                            </td>
+
+                            <td><audio controls>
+                                    <source src="<?php echo htmlspecialchars($song['preview']); ?>" type="audio/mpeg">Your browser does not support the audio element.
+                                </audio></td>
+
                         </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
+            <?php if ($offset + $limit < $totalSongs) : ?>
+                <div class="load-more">
+                    <a href="recommendedSongList.php?offset=<?php echo $offset + $limit; ?>">Load More</a>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </body>

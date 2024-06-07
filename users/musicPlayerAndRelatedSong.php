@@ -64,6 +64,17 @@ function isFavorite($user_id, $song_id, $conn)
         .btn.favorite .icon path {
             fill: yellow;
         }
+
+        .browse {
+            a {
+                text-decoration: none;
+                color: #ffffff;
+            }
+
+            a:hover {
+                color: #00848a;
+            }
+        }
     </style>
 </head>
 
@@ -89,7 +100,7 @@ function isFavorite($user_id, $song_id, $conn)
             </div>
             <div id="related-song" class="song-table">
                 <h3>Related songs</h3>
-                <div>
+                <div class="browse">
                     <?php if ($offset > 0) : ?>
                         <a href="?songId=<?php echo $currentSongId; ?>&offset=<?php echo $offset - 10; ?>">Previous</a>
                     <?php endif; ?>
@@ -123,7 +134,7 @@ function isFavorite($user_id, $song_id, $conn)
                                 </td>
                                 <td style="text-align: end">
                                     <?php if ($relatedSong['preview']) : ?>
-                                        <audio controls >
+                                        <audio controls>
                                             <source src="<?php echo htmlspecialchars($relatedSong['preview']); ?>" type="audio/mpeg">
                                             Your browser does not support the audio element.
                                         </audio>

@@ -57,7 +57,7 @@ body {
     display: flex;
     align-items: center;
     padding: 20px;
-    background-color: #b3b3b3;
+    background-color: #282828;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
@@ -88,7 +88,7 @@ body {
 
 .container {
     width: auto;
-    background-color: #fff;
+    background-color: #282828;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -123,7 +123,8 @@ thead {
     color: #ffffff;
 }
 
-th, td {
+th,
+td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #dddddd;

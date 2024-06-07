@@ -1,11 +1,27 @@
 <?php
-// Include your backend files here if needed
+session_start();
+require '../db.php'; // Update the path if necessary
 
-// Assuming you have a connection to your database already established
-// Fetch popular songs data from your database or any other source
-// Example:
-// $popularSongs = $conn->query("SELECT * FROM popular_songs");
+// Function to fetch popular songs with offset and limit
+function fetchPopularSongs($offset, $limit, $conn)
+{
+    $query = "SELECT id, name, img, preview FROM songs ORDER BY popularity DESC LIMIT ?, ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $offset, $limit);
+    $stmt->execute();
+    return $stmt->get_result();
+}
 
+// Function to check if a song is a favorite
+function isFavorite($user_id, $song_id, $conn)
+{
+    $query = "SELECT * FROM favorite_songs WHERE user_id = ? AND song_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $song_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->num_rows > 0;
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,83 +31,205 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Popular Songs</title>
-    <link rel="stylesheet" href="css/indexStyle.css">
+    <link rel="stylesheet" href="css/details.css">
     <style>
-        /* Add any additional styles if needed */
+        /* Add the existing styles here or link to your CSS file */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #121212;
+            position: fixed;
+            height: 100%;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #333;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        .container {
+            width: auto;
+            background-color: #282828;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .title-bar h1 {
+            margin: 0;
+        }
+
+        .title-bar .icons {
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid transparent;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #121212;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            border: none;
+            background-color: transparent;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn.favorite {
+            background-color: #00848a;
+        }
+
+        .btn .icon {
+            width: 25px;
+            height: 25px;
+            transition: transform 0.2s ease;
+        }
+
+        .btn .icon path {
+            fill: white;
+            transition: fill 0.2s ease;
+        }
+
+        .btn:hover .icon {
+            transform: scale(1.2);
+        }
+
+        .btn:hover .icon path {
+            fill: #00848a;
+        }
+
+        .btn.favorite .icon path {
+            fill: yellow;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        a:hover {
+            color: #00848a;
+        }
     </style>
 </head>
 
 <body>
-    <header>
-        <div class="logo">Music Streaming</div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="Details.php">Your Library</a></li>
-            </ul>
-        </nav>
-        <div class="auth-buttons">
-            <!-- Add authentication buttons if needed -->
-        </div>
-    </header>
-    <main>
-        <section class="popular-songs">
-            <div class="heading">
-                <h2>Popular Songs</h2>
+    <div class="sidebar">
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="search_results.php">Search</a></li>
+            <li><a href="Details.php">Your Library</a></li>
+            <li><a href="profile.php">More</a></li>
+            <li><a href="preferenceForm.php">Edit or Add preference</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="container">
+            <div class="title-bar">
+                <h1>Popular Songs</h1>
             </div>
-            <div class="playlist-container">
-                <!-- Loop through your popular songs data and display them -->
-                <?php while ($row = $popularSongs->fetch_assoc()) : ?>
-                    <div class="playlist">
-                        <a href="musicPlayerAndRelatedSong.php?songId=<?php echo $row['id']; ?>">
-                            <img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
-                            <p><?php echo htmlspecialchars($row['name']); ?></p>
-                        </a>
-                    </div>
-                <?php endwhile; ?>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <div class="footer-section">
-            <h3>Company</h3>
-            <ul>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Jobs</a></li>
-                <li><a href="#">For the Record</a></li>
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Song</th>
+                        <th>Image</th>
+                        <th>Preview</th>
+                    </tr>
+                </thead>
+                <tbody id="song-table-body">
+                    <!-- Songs will be loaded here -->
+                </tbody>
+            </table>
         </div>
-        <div class="footer-section">
-            <h3>Communities</h3>
-            <ul>
-                <li><a href="#">For Artists</a></li>
-                <li><a href="#">Developers</a></li>
-                <li><a href="#">Advertising</a></li>
-                <li><a href="#">Investors</a></li>
-                <li><a href="#">Vendors</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Useful links</h3>
-            <ul>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Free Mobile App</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Spotify Plans</h3>
-            <ul>
-                <li><a href="#">Premium Individual</a></li>
-                <li><a href="#">Premium Duo</a></li>
-                <li><a href="#">Premium Family</a></li>
-                <li><a href="#">Premium Student</a></li>
-                <li><a href="#">Spotify Free</a></li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2024 Spotify AB</p>
-        </div>
-    </footer>
+    </div>
+
+    <script>
+        let offset = 0;
+        const limit = 50;
+        const songTableBody = document.getElementById('song-table-body');
+
+        // Function to load more songs
+        function loadSongs() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `loadPopularSong.php?offset=${offset}&limit=${limit}`, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    const response = this.responseText;
+                    songTableBody.innerHTML += response;
+                    offset += limit;
+                }
+            };
+            xhr.send();
+        }
+
+        // Infinite scrolling
+        window.onscroll = function () {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                loadSongs();
+            }
+        };
+
+        // Load the initial songs
+        loadSongs();
+    </script>
 </body>
 
 </html>

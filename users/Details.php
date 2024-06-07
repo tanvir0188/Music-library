@@ -48,6 +48,69 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favorite Songs</title>
     <link rel="stylesheet" href="css/details.css">
+    <style>
+        .artist-header {
+            background-color: #282828;
+
+        }
+
+        .artist-header h1 {
+            color: #fff;
+        }
+
+        .container {
+            width: auto;
+            background-color: #282828;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .title-bar h1 {
+            margin: 0;
+        }
+
+        .title-bar .icons {
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid transparent;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #121212;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        a:hover {
+            color: #00848a;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 

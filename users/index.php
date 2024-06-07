@@ -79,6 +79,13 @@ include './Backend files/indexBackend.php';
             justify-content: space-between;
             padding-right: 50px;
         }
+        .heading a{
+            text-decoration: none;
+            color: white;
+        }
+        .heading a:hover{
+            color: #00848a;
+        }
     </style>
 </head>
 
@@ -127,7 +134,7 @@ include './Backend files/indexBackend.php';
 
                 <div class="heading">
                     <h2>Popular Songs</h2>
-                    <button id="seeMoreBtn" data-offset="0">See more</button> <!-- Add a data attribute to store the offset -->
+                    <a href="popularList.php">See more</a>
                 </div>
 
 
@@ -157,7 +164,10 @@ include './Backend files/indexBackend.php';
             </section>
 
             <section class="popular-artists">
-                <h2>Popular Artists</h2>
+            <div class="heading">
+                    <h2>Popular Artists</h2>
+                    <a href="ArtistList.php">See more</a>
+                </div>
 
                 <div class="artist-container">
                     <?php while ($row = $popularArtists->fetch_assoc()) : ?>
@@ -170,7 +180,10 @@ include './Backend files/indexBackend.php';
             </section>
             <?php if ($userLoggedIn) : ?>
                 <section class="popular-artists">
+                <div class="heading">
                     <h2>Recommended Songs</h2>
+                    <a href="recommendedSongList.php">See more</a>
+                </div>
                     <div class="artist-container">
                         <?php if ($preferences) : ?>
                             <?php foreach ($recommendations as $song) : ?>
