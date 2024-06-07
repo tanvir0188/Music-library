@@ -196,6 +196,7 @@ nav a {
 nav a:hover {
     color: black;
 }
+
 .auth-buttons a {
     text-decoration: none;
     color: #fff;
@@ -248,7 +249,7 @@ footer {
     color: #b3b3b3;
 }
 
-.search-results{
+.search-results {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -257,10 +258,13 @@ footer {
     padding-right: 5%;
 
 }
-.search-results table{
+
+.search-results table {
     width: 100%;
 }
-.search-results th, td{
+
+.search-results th,
+td {
     text-align: center;
 }
 
@@ -268,7 +272,7 @@ audio {
     width: 100%;
     background-color: #333;
     color: #fff;
-    
+
     border-radius: 5px;
     padding: 5px;
 }
@@ -299,19 +303,30 @@ audio::-moz-media-controls-enclosure {
     color: #fff;
 }
 
+.button {
+    position: relative;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid #34974d;
+    background-color: #3aa856;
+}
 
-  
-  .button, .button__icon, .button__text {
+.button,
+.button__icon,
+.button__text {
     transition: all 0.3s;
-  }
-  
-  .button .button__text {
+}
+
+.button .button__text {
     transform: translateX(30px);
     color: #fff;
     font-weight: 600;
-  }
-  
-  .button .button__icon {
+}
+
+.button .button__icon {
     position: absolute;
     transform: translateX(109px);
     height: 100%;
@@ -320,35 +335,35 @@ audio::-moz-media-controls-enclosure {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .button .svg {
+}
+
+.button .svg {
     width: 30px;
     stroke: #fff;
-  }
-  
-  .button:hover {
+}
+
+.button:hover {
     background: #34974d;
-  }
-  
-  .button:hover .button__text {
+}
+
+.button:hover .button__text {
     color: transparent;
-  }
-  
-  .button:hover .button__icon {
+}
+
+.button:hover .button__icon {
     width: 148px;
     transform: translateX(0);
-  }
-  
-  .button:active .button__icon {
+}
+
+.button:active .button__icon {
     background-color: #2e8644;
-  }
-  
-  .button:active {
+}
+
+.button:active {
     border: 1px solid #2e8644;
-  }
-  
-  .favorite-add-to-playlist-button{
+}
+
+.favorite-add-to-playlist-button {
     display: flex;
     justify-content: space-between;
-  }
+}

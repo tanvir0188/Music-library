@@ -81,4 +81,16 @@ END;
 //
 DELIMITER ;
 
+DELIMITER //
+CREATE TRIGGER decrement_popularity AFTER DELETE ON favorite_songs
+FOR EACH ROW
+BEGIN
+    UPDATE songs
+    SET popularity = popularity - 1
+    WHERE id = OLD.song_id;
+END;
+//
+DELIMITER ;
+
+
 

@@ -1,12 +1,56 @@
+<?php
+session_start();
+require '../db.php';
+
+// Check if the user is logged in
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../loginAnd signup.html");
+    exit();
+}
+
+$user_id = $_SESSION['userid'];
+
+// Handle removing a favorite song
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['song_id'])) {
+    $song_id = $_POST['song_id'];
+
+    $query = "DELETE FROM favorite_songs WHERE user_id = ? AND song_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $song_id);
+    $stmt->execute();
+}
+
+// Fetch favorite songs with artist and preview
+$query = "SELECT songs.id, songs.name AS title, songs.artist, songs.preview
+          FROM favorite_songs 
+          JOIN songs ON favorite_songs.song_id = songs.id 
+          WHERE favorite_songs.user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$favoriteSongs = [];
+
+while ($row = $result->fetch_assoc()) {
+    $favoriteSongs[] = $row;
+}
+
+$stmt->close();
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artist Page Example</title>
+    <title>Favorite Songs</title>
     <link rel="stylesheet" href="css/details.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <div class="sidebar">
         <ul>
@@ -26,10 +70,9 @@
             </div>
         </div>
 
-        
         <div class="container">
             <div class="title-bar">
-                <h1>Song List</h1>
+                <h1>Favorite Songs</h1>
                 <div class="icons">
                     <i class="fas fa-play"></i>
                     <i class="fas fa-heart"></i>
@@ -41,30 +84,52 @@
                     <tr>
                         <th>#</th>
                         <th>Title</th>
-                        <th>Album</th>
-                        <th>Date Added</th>
-                        <th>Time</th>
+                        <th>Artist</th>
+                        <th>Preview</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Song Title 1</td>
-                        <td>Album 1</td>
-                        <td>2024-05-01</td>
-                        <td>3:45</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Song Title 2</td>
-                        <td>Album 2</td>
-                        <td>2024-05-02</td>
-                        <td>4:05</td>
-                    </tr>
-                    <!-- Add more rows as needed -->
+                    <?php if (!empty($favoriteSongs)) : ?>
+                        <?php foreach ($favoriteSongs as $index => $song) : ?>
+                            <tr>
+                                <td><?php echo $index + 1; ?></td>
+                                <td>
+                                    <a href="musicPlayerAndRelatedSong.php?songId=<?php echo $song['id']; ?>">
+                                        <?php echo htmlspecialchars($song['title']); ?>
+                                    </a>
+                                </td>
+
+                                <td><a href="artistDetails.php?artist=<?php echo $song['artist']; ?>"><?php echo htmlspecialchars($song['artist']); ?></a></td>
+                                <td>
+                                    <?php if (!empty($song['preview'])) : ?>
+                                        <audio controls>
+                                            <source src="<?php echo htmlspecialchars($song['preview']); ?>" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                    <?php else : ?>
+                                        No preview available
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <form method="post" action="">
+                                        <input type="hidden" name="song_id" value="<?php echo $song['id']; ?>">
+                                        <button type="submit" class="btn btn-remove">
+                                            <i class="fas fa-trash-alt"></i> Remove
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <tr>
+                            <td colspan="5">No favorite songs found.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

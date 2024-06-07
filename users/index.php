@@ -26,7 +26,6 @@ include './Backend files/indexBackend.php';
         }
 
         .btn::after {
-            content: 'add to favorite';
             width: auto;
             height: auto;
             position: absolute;
@@ -71,19 +70,14 @@ include './Backend files/indexBackend.php';
 
         .btn.favorite .icon path {
             fill: yellow;
+
             /* Or another color to indicate it's a favorite */
         }
 
-
-        .button {
-            position: relative;
-            width: 150px;
-            height: 40px;
-            cursor: pointer;
+        .heading {
             display: flex;
-            align-items: center;
-            border: 1px solid #34974d;
-            background-color: #3aa856;
+            justify-content: space-between;
+            padding-right: 50px;
         }
     </style>
 </head>
@@ -120,8 +114,6 @@ include './Backend files/indexBackend.php';
         <section class="content">
             <section class="playlists">
                 <?php
-                // Assuming the $popularSongs and user login checks are already handled here
-
                 function isFavorite($user_id, $song_id, $conn)
                 {
                     $query = "SELECT * FROM favorite_songs WHERE user_id = ? AND song_id = ?";
@@ -133,7 +125,12 @@ include './Backend files/indexBackend.php';
                 }
                 ?>
 
-                <h2>Popular Songs</h2>
+                <div class="heading">
+                    <h2>Popular Songs</h2>
+                    <button id="seeMoreBtn" data-offset="0">See more</button> <!-- Add a data attribute to store the offset -->
+                </div>
+
+
                 <div class="playlist-container">
                     <?php while ($row = $popularSongs->fetch_assoc()) : ?>
                         <?php $isFavorite = isset($_SESSION['userid']) ? isFavorite($_SESSION['userid'], $row['id'], $conn) : false; ?>
@@ -161,6 +158,7 @@ include './Backend files/indexBackend.php';
 
             <section class="popular-artists">
                 <h2>Popular Artists</h2>
+
                 <div class="artist-container">
                     <?php while ($row = $popularArtists->fetch_assoc()) : ?>
                         <div class="artist" id="artist_<?php echo urlencode($row['artist']); ?>">
@@ -176,21 +174,17 @@ include './Backend files/indexBackend.php';
                     <div class="artist-container">
                         <?php if ($preferences) : ?>
                             <?php foreach ($recommendations as $song) : ?>
+                                <?php $isFavorite = isset($_SESSION['userid']) ? isFavorite($_SESSION['userid'], $song['id'], $conn) : false; ?>
                                 <div class="artist" id="song_<?php echo $song['id']; ?>">
                                     <div class="favorite-add-to-playlist-button">
-                                        <button class="btn">
-                                            <svg viewBox="0 0 17.503 15.625" height="20.625" width="20.503" xmlns="http://www.w3.org/2000/svg" class="icon">
-                                                <path transform="translate(0 0)" d="M8.752,15.625h0L1.383,8.162a4.824,4.824,0,0,1,0-6.762,4.679,4.679,0,0,1,6.674,0l.694.7.694-.7a4.678,4.678,0,0,1,6.675,0,4.825,4.825,0,0,1,0,6.762L8.752,15.624ZM4.72,1.25A3.442,3.442,0,0,0,2.277,2.275a3.562,3.562,0,0,0,0,5l6.475,6.556,6.475-6.556a3.563,3.563,0,0,0,0-5A3.443,3.443,0,0,0,12.786,1.25h-.01a3.415,3.415,0,0,0-2.443,1.038L8.752,3.9,7.164,2.275A3.442,3.442,0,0,0,4.72,1.25Z" id="Fill"></path>
-                                            </svg>
-                                        </button>
-
-                                        <button type="button" class="button">
-                                            <span class="button__text">Add Item</span>
-                                            <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
-                                                    <line y2="19" y1="5" x2="12" x1="12"></line>
-                                                    <line y2="12" y1="12" x2="19" x1="5"></line>
-                                                </svg></span>
-                                        </button>
+                                        <form method="post" action="insertFavorite.php">
+                                            <input type="hidden" name="song_id" value="<?php echo $song['id']; ?>">
+                                            <button type="submit" class="btn <?php echo $isFavorite ? 'favorite' : ''; ?>">
+                                                <svg viewBox="0 0 17.503 15.625" height="20.625" width="20.503" xmlns="http://www.w3.org/2000/svg" class="icon">
+                                                    <path transform="translate(0 0)" d="M8.752,15.625h0L1.383,8.162a4.824,4.824,0,0,1,0-6.762,4.679,4.679,0,0,1,6.674,0l.694.7.694-.7a4.678,4.678,0,0,1,6.675,0,4.825,4.825,0,0,1,0,6.762L8.752,15.624ZM4.72,1.25A3.442,3.442,0,0,0,2.277,2.275a3.562,3.562,0,0,0,0,5l6.475,6.556,6.475-6.556a3.563,3.563,0,0,0,0-5A3.443,3.443,0,0,0,12.786,1.25h-.01a3.415,3.415,0,0,0-2.443,1.038L8.752,3.9,7.164,2.275A3.442,3.442,0,0,0,4.72,1.25Z" id="Fill"></path>
+                                                </svg>
+                                            </button>
+                                        </form>
                                     </div>
                                     <a href="musicPlayerAndRelatedSong.php?songId=<?php echo $song['id']; ?>">
                                         <img src="<?php echo htmlspecialchars($song['img']); ?>" alt="<?php echo htmlspecialchars($song['name']); ?>">
@@ -203,8 +197,8 @@ include './Backend files/indexBackend.php';
                         <?php endif; ?>
                     </div>
                 </section>
-
             <?php endif; ?>
+
         </section>
     </main>
 
