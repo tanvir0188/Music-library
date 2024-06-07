@@ -1,15 +1,12 @@
 <?php
 include '../db.php';
 
-// Check if artist parameter is set
 if (isset($_GET['artist'])) {
     $artist = sanitize($_GET['artist']);
 
-    // Fetch songs by the specified artist
     $artistSongsQuery = "SELECT * FROM songs WHERE artist = '$artist'";
     $artistSongsResult = $conn->query($artistSongsQuery);
 } else {
-    // Redirect if artist parameter is not set
     header("Location: index.php");
     exit();
 }
@@ -151,10 +148,9 @@ if (isset($_GET['artist'])) {
     <script>
         window.onscroll = function() {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                // Show loader
                 document.getElementById("loader").style.display = "block";
 
-                // Fetch more songs via AJAX
+                
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "getArtistSongs.php?artist=<?php echo $artist; ?>&offset=" + document.getElementById("artistSongList").rows.length, true);
                 xhr.onload = function() {

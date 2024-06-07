@@ -106,8 +106,8 @@ include './Backend files/indexBackend.php';
         </nav>
         <div class="auth-buttons">
             <?php if (!$userLoggedIn) : ?>
-                <button class="login-btn" onclick="window.location.href='../loginAnd signup.html'">Login</button>
-                <button class="signup-btn" onclick="window.location.href='../loginAnd signup.html'">Sign Up</button>
+                <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+                <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
             <?php else : ?>
                 <span>Welcome, <a href="profile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a></span>
             <?php endif; ?>
@@ -166,7 +166,7 @@ include './Backend files/indexBackend.php';
             <section class="popular-artists">
             <div class="heading">
                     <h2>Popular Artists</h2>
-                    <a href="ArtistList.php">See more</a>
+                    <a href="#">See more</a>
                 </div>
 
                 <div class="artist-container">
@@ -258,7 +258,7 @@ include './Backend files/indexBackend.php';
 
     <script>
         <?php
-        $popularSongs->data_seek(0); // Resetting the pointer for the loop
+        $popularSongs->data_seek(0); 
         while ($row = $popularSongs->fetch_assoc()) :
         ?>
             document.getElementById('song_<?php echo $row['id']; ?>').onclick = function() {

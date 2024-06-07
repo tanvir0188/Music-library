@@ -1,8 +1,8 @@
 <?php
 session_start();
-require '../db.php'; // Update the path if necessary
+require '../db.php'; 
 
-// Function to fetch popular songs with offset and limit
+
 function fetchPopularSongs($offset, $limit, $conn)
 {
     $query = "SELECT id, name, img, preview FROM songs ORDER BY popularity DESC LIMIT ?, ?";
@@ -12,7 +12,7 @@ function fetchPopularSongs($offset, $limit, $conn)
     return $stmt->get_result();
 }
 
-// Function to check if a song is a favorite
+
 function isFavorite($user_id, $song_id, $conn)
 {
     $query = "SELECT * FROM favorite_songs WHERE user_id = ? AND song_id = ?";
@@ -33,7 +33,7 @@ function isFavorite($user_id, $song_id, $conn)
     <title>Popular Songs</title>
     <link rel="stylesheet" href="css/details.css">
     <style>
-        /* Add the existing styles here or link to your CSS file */
+    
         body {
             font-family: Arial, sans-serif;
             background-color: #181818;
@@ -195,7 +195,6 @@ function isFavorite($user_id, $song_id, $conn)
                     </tr>
                 </thead>
                 <tbody id="song-table-body">
-                    <!-- Songs will be loaded here -->
                 </tbody>
             </table>
         </div>

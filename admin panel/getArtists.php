@@ -8,12 +8,10 @@ function fetchArtists($offset) {
     return $artistsResult;
 }
 
-// Fetch artists based on offset
 if (isset($_GET['offset'])) {
     $offset = intval($_GET['offset']);
     $artistsResult = fetchArtists($offset);
 
-    // Display fetched artists with song counts
     while ($row = $artistsResult->fetch_assoc()) {
         echo "<tr>";
         echo "<td><a href='artistSongs.php?artist=" . urlencode($row['artist']) . "'>{$row['artist']}</a></td>";

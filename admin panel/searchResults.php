@@ -2,19 +2,16 @@
 session_start();
 require '../db.php';
 
-// Check if user is logged in and is an admin
 if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
     header("Location: ../loginAnd signup.html");
     exit();
 }
 
-// Get the search query
 $searchQuery = '';
 if (isset($_GET['query'])) {
     $searchQuery = htmlspecialchars($_GET['query']);
 }
 
-// Function to fetch search results based on song name or artist name
 function fetchSearchResults($searchQuery) {
     global $conn;
     $query = "SELECT name, artist, img FROM songs 
@@ -26,7 +23,6 @@ function fetchSearchResults($searchQuery) {
     return $stmt->get_result();
 }
 
-// Fetch search results
 $searchResults = fetchSearchResults($searchQuery);
 ?>
 

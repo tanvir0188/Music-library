@@ -1,8 +1,8 @@
 <?php
 session_start();
-require '../db.php'; // Update the path if necessary
+require '../db.php'; 
 
-// Check if user is logged in
+
 if (!isset($_SESSION['userid'])) {
     header('Location: ../loginAnd signup.html');
     exit();
@@ -13,7 +13,7 @@ $username = '';
 $email = '';
 $usertype = '';
 
-// Fetch user details
+
 $query = "SELECT username, email, usertype FROM users WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('i', $userId);
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $newEmail = $_POST['email'];
     $newPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Update user details
+    
     $updateQuery = "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
     $stmt = $conn->prepare($updateQuery);
     $stmt->bind_param('sssi', $newUsername, $newEmail, $newPassword, $userId);
@@ -112,9 +112,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="sidebar">
         <ul>
             <li><a href="index.php">Home</a></li>
-            <li><a href="#">Search</a></li>
-            <li><a href="#">Your Library</a></li>
+            <li><a href="search_results.php">Search</a></li>
+            <li><a href="Details.php">Your Library</a></li>
             <li><a href="profile.php">More</a></li>
+            <li><a href="preferenceForm.php">Edit or Add preference</a></li>
         </ul>
     </div>
 

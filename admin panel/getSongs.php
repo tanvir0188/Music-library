@@ -16,14 +16,11 @@ function fetchSongs($offset, $searchQuery = null) {
     $songsResult = $conn->query($songsQuery);
     return $songsResult;
 }
-
-// Fetch songs based on offset and search query
 if (isset($_GET['offset'])) {
     $offset = intval($_GET['offset']);
     $searchQuery = isset($_GET['search']) ? $_GET['search'] : null;
     $songsResult = fetchSongs($offset, $searchQuery);
 
-    // Display fetched songs
     while ($row = $songsResult->fetch_assoc()) {
         echo "<tr>";
         echo "<td>{$row['id']}</td>";

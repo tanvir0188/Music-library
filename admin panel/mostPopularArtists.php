@@ -2,13 +2,12 @@
 session_start();
 require '../db.php';
 
-// Check if user is logged in and is an admin
 if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
     header("Location: ../loginAnd signup.html");
     exit();
 }
 
-// Function to fetch most popular artists by aggregating song popularity
+// get popular artists
 function fetchPopularArtists($limit) {
     global $conn;
     $query = "SELECT artist, SUM(popularity) as total_popularity, MAX(img) as img
@@ -19,7 +18,6 @@ function fetchPopularArtists($limit) {
     return $conn->query($query);
 }
 
-// Fetch top 50 popular artists
 $popularArtists = fetchPopularArtists(50);
 ?>
 

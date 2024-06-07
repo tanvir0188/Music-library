@@ -1,8 +1,7 @@
 <?php
 session_start();
-require '../db.php'; // Update the path if necessary
+require '../db.php'; 
 
-// Check if the user is logged in
 $userLoggedIn = isset($_SESSION['userid']);
 $fullRecommendation = [];
 

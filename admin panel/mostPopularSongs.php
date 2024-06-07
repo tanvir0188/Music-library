@@ -2,21 +2,20 @@
 session_start();
 require '../db.php';
 
-// Check if user is logged in and is an admin
+
 if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
     header("Location: ../loginAnd signup.html");
     exit();
 }
 
-// Function to fetch most popular songs
+
 function fetchPopularSongs($limit) {
     global $conn;
-    // Assuming there's a 'popularity' column in the 'songs' table to determine popular songs
+    
     $query = "SELECT name, artist, img FROM songs ORDER BY popularity DESC LIMIT $limit";
     return $conn->query($query);
 }
 
-// Fetch top 50 popular songs
 $popularSongs = fetchPopularSongs(50);
 ?>
 

@@ -1,9 +1,9 @@
 <?php
-include '../db.php'; // Include your database connection file
+include '../db.php'; 
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Collect form data
+    
     $name = $_POST['name'];
     $artist = $_POST['artist'];
     $spotify_id = $_POST['spotify_id'];
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $speechiness_artist = $_POST['speechiness_artist'] ?? null;
     $valence_artist = $_POST['valence_artist'] ?? null;
 
-    // Prepare SQL statement
+    
     $sql = "INSERT INTO songs (name, artist, spotify_id, preview, img, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, acousticness_artist, danceability_artist, energy_artist, instrumentalness_artist, liveness_artist, speechiness_artist, valence_artist) 
             VALUES ('$name', '$artist', '$spotify_id', '$preview', '$image_url', $danceability, $energy, $loudness, $speechiness, $acousticness, $instrumentalness, $liveness, $valence, $acousticness_artist, $danceability_artist, $energy_artist, $instrumentalness_artist, $liveness_artist, $speechiness_artist, $valence_artist)";
     

@@ -1,31 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Spotify Clone</title>
     <link rel="stylesheet" href="css/loginSignup.css">
+    <script>
+        function validateForm() {
+            var email = document.getElementById("email").value;
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+
+            
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            
+            var usernameRegex = /^[a-zA-Z0-9]+$/;
+            if (!usernameRegex.test(username)) {
+                alert("Username should not contain special characters.");
+                return false;
+            }
+
+            
+            var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                alert("Password should be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+                return false;
+            }
+
+            
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            return true; 
+        }
+
+    </script>
 </head>
+
 <body>
     <header>
         <div class="logo">Music streaming</div>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="#">Search</a></li>
-                <li><a href="#">Your Library</a></li>
-                <li><a href="#">More</a></li>
+                <li><a href="Details.php">Your Library</a></li>
             </ul>
         </nav>
         <div class="auth-buttons">
-            <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+            <button class="signup-btn" onclick="window.location.href='login.html'">Login</button>
         </div>
     </header>
     <main class="auth-page">
         <h1>Sign Up</h1>
-        <form class="auth-form">
+        <form class="auth-form" action="signUp.php" method="post" onsubmit="return validateForm()">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
+            <label for="username">Username</label>
+            <input type="username" id="username" name="username" required>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
             <label for="confirm-password">Confirm Password</label>
@@ -33,45 +74,5 @@
             <button type="submit">Sign Up</button>
         </form>
     </main>
-    <footer>
-        <div class="footer-section">
-            <h3>Company</h3>
-            <ul>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Jobs</a></li>
-                <li><a href="#">For the Record</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Communities</h3>
-            <ul>
-                <li><a href="#">For Artists</a></li>
-                <li><a href="#">Developers</a></li>
-                <li><a href="#">Advertising</a></li>
-                <li><a href="#">Investors</a></li>
-                <li><a href="#">Vendors</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Useful links</h3>
-            <ul>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Free Mobile App</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Spotify Plans</h3>
-            <ul>
-                <li><a href="#">Premium Individual</a></li>
-                <li><a href="#">Premium Duo</a></li>
-                <li><a href="#">Premium Family</a></li>
-                <li><a href="#">Premium Student</a></li>
-                <li><a href="#">Spotify Free</a></li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2024 Spotify AB</p>
-        </div>
-    </footer>
 </body>
 </html>

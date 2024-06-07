@@ -1,8 +1,6 @@
 <?php
-// Establish database connection
 include 'db.php';
 
-// Fetch users
 $usersQuery = "SELECT * FROM users";
 $usersResult = $conn->query($usersQuery);
 
@@ -25,7 +23,7 @@ $usersResult = $conn->query($usersQuery);
             <th>Created At</th>
         </tr>
         <?php
-        // Display users
+        
         while ($row = $usersResult->fetch_assoc()) {
             echo "<tr>";
             echo "<td>{$row['id']}</td>";

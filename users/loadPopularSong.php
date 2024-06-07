@@ -1,11 +1,11 @@
 <?php
 session_start();
-require '../db.php'; // Update the path if necessary
+require '../db.php'; 
 
 $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
 $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 50;
 
-// Function to fetch popular songs with offset and limit
+
 function fetchPopularSongs($offset, $limit, $conn)
 {
     $query = "SELECT id, name, img, preview FROM songs ORDER BY popularity DESC LIMIT ?, ?";
@@ -15,7 +15,7 @@ function fetchPopularSongs($offset, $limit, $conn)
     return $stmt->get_result();
 }
 
-// Function to check if a song is a favorite
+
 function isFavorite($user_id, $song_id, $conn)
 {
     $query = "SELECT * FROM favorite_songs WHERE user_id = ? AND song_id = ?";
@@ -26,7 +26,7 @@ function isFavorite($user_id, $song_id, $conn)
     return $result->num_rows > 0;
 }
 
-// Fetch songs
+
 $songs = fetchPopularSongs($offset, $limit, $conn);
 
 while ($row = $songs->fetch_assoc()) :

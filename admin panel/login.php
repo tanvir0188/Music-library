@@ -7,13 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $remember = isset($_POST['remember']);
 
-    // Input validation
+    
     if (empty($username) || empty($password)) {
         echo "Username and Password are required.";
         exit();
     }
 
-    // Check if the user exists
+    
     $sql = "SELECT id, username, password, usertype FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -24,14 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($id, $username, $hashed_password, $usertype);
         $stmt->fetch();
 
-        // Verify password
+        
         if (password_verify($password, $hashed_password)) {
-            // Set session variables
+            
             $_SESSION['userid'] = $id;
             $_SESSION['username'] = $username;
             $_SESSION['usertype'] = $usertype;
 
-            // Set cookies if "Remember me" is checked
+            
             if ($remember) {
                 setcookie("userid", $id, time() + (86400 * 30), "/"); // 86400 = 1 day
                 setcookie("username", $username, time() + (86400 * 30), "/");

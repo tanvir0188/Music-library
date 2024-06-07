@@ -1,8 +1,8 @@
 <?php
 session_start();
-require '../db.php'; // Update the path if necessary
+require '../db.php'; 
 
-// Function to fetch popular songs
+
 function fetchPopularSongs($limit)
 {
     global $conn;
@@ -10,7 +10,6 @@ function fetchPopularSongs($limit)
     return $conn->query($query);
 }
 
-// Function to fetch popular artists
 function fetchPopularArtists($limit)
 {
     global $conn;

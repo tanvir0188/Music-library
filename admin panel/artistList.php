@@ -7,7 +7,7 @@ if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
     exit();
 }
 
-// Function to fetch artists based on offset
+
 function fetchArtistsWithSongCount($offset) {
     global $conn;
     $artistsQuery = "SELECT artist, COUNT(*) AS song_count FROM songs GROUP BY artist LIMIT 20 OFFSET $offset";
@@ -15,7 +15,7 @@ function fetchArtistsWithSongCount($offset) {
     return $artistResult;
 }
 
-// Function to fetch artists based on search query
+
 function searchArtists($searchQuery) {
     global $conn;
     $searchQuery = $conn->real_escape_string($searchQuery);
@@ -24,7 +24,7 @@ function searchArtists($searchQuery) {
     return $artistsResult;
 }
 
-// Initial offset
+
 $offset = 0;
 
 // Check if search query is set
@@ -61,14 +61,14 @@ if (isset($_GET['search'])) {
         <table id="artistList" class="default-table">
             <tr>
                 <th>Artist</th>
-                <th>Total Songs</th> <!-- New column header -->
+                <th>Total Songs</th> 
             </tr>
             <?php
-            // Display initial artists with song count
+            
             while ($row = $artistsResult->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td><a href='artistSongs.php?artist=" . urlencode($row['artist']) . "'>{$row['artist']}</a></td>";
-                echo "<td>{$row['song_count']}</td>"; // Display song count
+                echo "<td>{$row['song_count']}</td>"; 
                 echo "</tr>";
             }
             ?>
@@ -81,19 +81,17 @@ if (isset($_GET['search'])) {
 
         window.onscroll = function() {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                // Show loader
+                
                 document.getElementById("loader").style.display = "block";
 
-                // Fetch more artists via AJAX
+                
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "getArtists.php?offset=" + (offset + 20), true);
                 xhr.onload = function() {
                     if (xhr.status == 200) {
-                        // Append new artists to the table
+                        
                         document.getElementById("artistList").insertAdjacentHTML('beforeend', xhr.responseText);
-                        // Hide loader
                         document.getElementById("loader").style.display = "none";
-                        // Update offset
                         offset += 20;
                     }
                 };

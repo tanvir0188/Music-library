@@ -1,5 +1,5 @@
 <?php
-require '../db.php'; // Include database connection
+require '../db.php'; 
 
 if (isset($_GET['search'])) {
     $searchQuery = $_GET['search'];
@@ -15,7 +15,6 @@ if (isset($_GET['search'])) {
         $songs[] = $row;
     }
 
-    // Pass results to the search_results.php page
     session_start();
     $_SESSION['search_results'] = $songs;
     header('Location: search_results.php');

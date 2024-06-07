@@ -1,15 +1,15 @@
 <?php
 session_start();
 if (!isset($_SESSION['userid'])) {
-    header('Location: login.php'); // Redirect to login page if user is not logged in
+    header('Location: login.php'); 
     exit();
 }
 
-require '../db.php'; // Update the path if necessary
+require '../db.php'; 
 
 $user_id = $_SESSION['userid'];
 
-// Fetch the user's existing preferences if available
+
 $query = "SELECT * FROM preferences WHERE user_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('i', $user_id);
@@ -34,10 +34,10 @@ function convertPreference($preference, $type)
 {
     switch ($type) {
         case 'loudness':
-            // Loudness typically ranges from -60 to 0 dB
+            
             switch ($preference) {
                 case 'very low':
-                    return -40; // Adjusted for very low
+                    return -40; 
                 case 'low':
                     return -20;
                 case 'moderate':
@@ -45,14 +45,14 @@ function convertPreference($preference, $type)
                 case 'high':
                     return -5;
                 case 'very high':
-                    return 0; // Adjusted for very high
+                    return 0; 
             }
             break;
         case 'instrumentalness':
-            // Instrumentalness ranges from 0 to 1
+            
             switch ($preference) {
                 case 'very low':
-                    return 0; // Adjusted for very low
+                    return 0; 
                 case 'low':
                     return 0.05;
                 case 'moderate':
@@ -60,14 +60,14 @@ function convertPreference($preference, $type)
                 case 'high':
                     return 0.75;
                 case 'very high':
-                    return 1.0; // Adjusted for very high
+                    return 1.0; 
             }
             break;
         default:
-            // For other metrics that range from 0 to 1
+            
             switch ($preference) {
                 case 'very low':
-                    return 0; // Adjusted for very low
+                    return 0; 
                 case 'low':
                     return 0.1;
                 case 'moderate':
@@ -75,7 +75,7 @@ function convertPreference($preference, $type)
                 case 'high':
                     return 0.9;
                 case 'very high':
-                    return 1.0; // Adjusted for very high
+                    return 1.0; 
             }
     }
 }
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $valence = convertPreference($_POST['valence'], 'valence');
 
 
-    // Check if the user already has preferences
+    
     $query = "SELECT * FROM preferences WHERE user_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $user_id);
@@ -99,12 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Update existing preferences
         $query = "UPDATE preferences SET danceability = ?, energy = ?, loudness = ?, speechiness = ?, acousticness = ?, instrumentalness = ?, liveness = ?, valence = ? WHERE user_id = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('ddddddddi', $danceability, $energy, $loudness, $speechiness, $acousticness, $instrumentalness, $liveness, $valence, $user_id);
     } else {
-        // Insert new preferences
         $query = "INSERT INTO preferences (user_id, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('idddddddd', $user_id, $danceability, $energy, $loudness, $speechiness, $acousticness, $instrumentalness, $liveness, $valence);
@@ -112,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
 
     if ($stmt->execute()) {
-        header('Location: index.php'); // Redirect after successful submission
+        header('Location: index.php'); 
     } else {
         echo "Error: " . $stmt->error;
     }

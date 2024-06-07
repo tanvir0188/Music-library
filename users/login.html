@@ -11,10 +11,9 @@
         <div class="logo">Music streaming</div>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="#">Search</a></li>
-                <li><a href="#">Your Library</a></li>
-                <li><a href="#">More</a></li>
+                <li><a href="Details.php">Your Library</a></li>
             </ul>
         </nav>
         <div class="auth-buttons">
@@ -23,9 +22,9 @@
     </header>
     <main class="auth-page">
         <h1>Login</h1>
-        <form class="auth-form">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+        <form class="auth-form" action="../admin panel/login.php" method="post">
+            <label for="username">Username</label>
+            <input type="username" id="username" name="username" required>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
             <button type="submit">Login</button>

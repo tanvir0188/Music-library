@@ -75,7 +75,7 @@ if (isset($_GET['search'])) {
                 <th>Image</th>
             </tr>
             <?php
-            // Display initial songs
+            
             while ($row = $songsResult->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>{$row['id']}</td>";
@@ -94,15 +94,15 @@ if (isset($_GET['search'])) {
 
         window.onscroll = function() {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                // Show loader
+                
                 document.getElementById("loader").style.display = "block";
 
-                // Fetch more songs via AJAX
+                
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "getSongs.php?offset=" + (offset + 20), true);
                 xhr.onload = function() {
                     if (xhr.status == 200) {
-                        // Append new songs to the table
+                        
                         document.getElementById("songList").insertAdjacentHTML('beforeend', xhr.responseText);
                         // Hide loader
                         document.getElementById("loader").style.display = "none";

@@ -2,14 +2,12 @@
 session_start();
 include '../db.php';
 
-
-// Check if the user is logged in and if the user is an admin
 if (!isset($_SESSION['userid']) || $_SESSION['usertype'] !== 'admin') {
     header("Location: index.php");
     exit();
 }
 
-// Fetch all users from the database
+
 $userListQuery = "SELECT * FROM users";
 $userListResult = $conn->query($userListQuery);
 ?>

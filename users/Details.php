@@ -2,15 +2,13 @@
 session_start();
 require '../db.php';
 
-// Check if the user is logged in
 if (!isset($_SESSION['userid'])) {
-    header("Location: ../loginAnd signup.html");
+    header("Location: login.html");
     exit();
 }
 
 $user_id = $_SESSION['userid'];
 
-// Handle removing a favorite song
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['song_id'])) {
     $song_id = $_POST['song_id'];
 
@@ -20,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['song_id'])) {
     $stmt->execute();
 }
 
-// Fetch favorite songs with artist and preview
 $query = "SELECT songs.id, songs.name AS title, songs.artist, songs.preview
           FROM favorite_songs 
           JOIN songs ON favorite_songs.song_id = songs.id 

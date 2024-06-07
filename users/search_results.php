@@ -74,8 +74,9 @@ unset($_SESSION['search_results']);
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="#">Your Library</a></li>
-                <li><a href="#">More</a></li>
+                <li><a href="Details.php">Your Library</a></li>
+                <li><a href="profile.php">More</a></li>
+                <li><a href="preferenceForm.php">Edit or Add preference</a></li>
             </ul>
             <form action="search_action.php" class="search-form" method="GET">
                 <input type="text" placeholder="Search.." name="search">

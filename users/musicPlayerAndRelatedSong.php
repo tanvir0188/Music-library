@@ -2,7 +2,7 @@
 include './getRelatedMusic.php';
 session_start();
 
-// Function to check if a song is a favorite
+
 function isFavorite($user_id, $song_id, $conn)
 {
     $query = "SELECT * FROM favorite_songs WHERE user_id = ? AND song_id = ?";
@@ -23,7 +23,7 @@ function isFavorite($user_id, $song_id, $conn)
     <title>Music Player</title>
     <link rel="stylesheet" href="css/musicPlayer.css">
     <style>
-        /* Add similar CSS styles from previous example */
+        
         .btn {
             display: flex;
             align-items: center;
