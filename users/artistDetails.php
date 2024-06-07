@@ -10,7 +10,8 @@ if (!$artist) {
 }
 
 // Function to fetch the artist's image
-function fetchArtistImage($artist) {
+function fetchArtistImage($artist)
+{
     global $conn;
     $query = "SELECT img FROM songs WHERE artist = ? GROUP BY img ORDER BY COUNT(*) DESC LIMIT 1";
     $stmt = $conn->prepare($query);
@@ -23,7 +24,8 @@ function fetchArtistImage($artist) {
 }
 
 // Function to fetch songs by artist
-function fetchSongsByArtist($artist) {
+function fetchSongsByArtist($artist)
+{
     global $conn;
     $query = "SELECT name, img, preview FROM songs WHERE artist = ?";
     $stmt = $conn->prepare($query);
@@ -41,12 +43,27 @@ $songs = fetchSongsByArtist($artist);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($artist); ?> - Songs</title>
     <link rel="stylesheet" href="css/details.css">
+    <style>
+        tr:nth-child(even) {
+            background-color: #121212;
+        }
+
+        .container {
+            width: auto;
+            background-color: #181818;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+    </style>
 </head>
+
 <body>
     <div class="sidebar">
         <ul>
@@ -80,7 +97,7 @@ $songs = fetchSongsByArtist($artist);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row = $songs->fetch_assoc()): ?>
+                    <?php while ($row = $songs->fetch_assoc()) : ?>
                         <tr>
                             <td><?php echo htmlspecialchars($row['name']); ?></td>
                             <td><img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>" width="50"></td>
@@ -101,4 +118,5 @@ $songs = fetchSongsByArtist($artist);
         </div>
     </div>
 </body>
+
 </html>

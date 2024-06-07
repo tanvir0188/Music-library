@@ -58,6 +58,7 @@ $conn->close();
             <li><a href="search_results.php">Search</a></li>
             <li><a href="#">Your Library</a></li>
             <li><a href="profile.php">More</a></li>
+            <li><a href="preferenceForm.php">Edit or Add preference</a></li>
         </ul>
     </div>
 
@@ -65,7 +66,7 @@ $conn->close();
         <div class="artist-header">
             <img src="picture/Artist(1).jpg" alt="Artist Photo">
             <div>
-                <h1>Title</h1>
+                <h1>Favorite Songs</h1>
                 <p>Description</p>
             </div>
         </div>

@@ -7,7 +7,31 @@ if (!isset($_SESSION['userid'])) {
 
 require '../db.php'; // Update the path if necessary
 
-function convertPreference($preference, $type) {
+$user_id = $_SESSION['userid'];
+
+// Fetch the user's existing preferences if available
+$query = "SELECT * FROM preferences WHERE user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$user_preferences = array();
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $user_preferences['danceability'] = $row['danceability'];
+    $user_preferences['energy'] = $row['energy'];
+    $user_preferences['loudness'] = $row['loudness'];
+    $user_preferences['speechiness'] = $row['speechiness'];
+    $user_preferences['acousticness'] = $row['acousticness'];
+    $user_preferences['instrumentalness'] = $row['instrumentalness'];
+    $user_preferences['liveness'] = $row['liveness'];
+    $user_preferences['valence'] = $row['valence'];
+}
+
+
+function convertPreference($preference, $type)
+{
     switch ($type) {
         case 'loudness':
             // Loudness typically ranges from -60 to 0 dB
@@ -57,7 +81,6 @@ function convertPreference($preference, $type) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_id = $_SESSION['userid'];
     $danceability = convertPreference($_POST['danceability'], 'danceability');
     $energy = convertPreference($_POST['energy'], 'energy');
     $loudness = convertPreference($_POST['loudness'], 'loudness');
@@ -67,10 +90,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $liveness = convertPreference($_POST['liveness'], 'liveness');
     $valence = convertPreference($_POST['valence'], 'valence');
 
-    $query = "INSERT INTO preferences (user_id, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence)
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    // Check if the user already has preferences
+    $query = "SELECT * FROM preferences WHERE user_id = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('idddddddd', $user_id, $danceability, $energy, $loudness, $speechiness, $acousticness, $instrumentalness, $liveness, $valence);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Update existing preferences
+        $query = "UPDATE preferences SET danceability = ?, energy = ?, loudness = ?, speechiness = ?, acousticness = ?, instrumentalness = ?, liveness = ?, valence = ? WHERE user_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ddddddddi', $danceability, $energy, $loudness, $speechiness, $acousticness, $instrumentalness, $liveness, $valence, $user_id);
+    } else {
+        // Insert new preferences
+        $query = "INSERT INTO preferences (user_id, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('idddddddd', $user_id, $danceability, $energy, $loudness, $speechiness, $acousticness, $instrumentalness, $liveness, $valence);
+    }
+    
+
     if ($stmt->execute()) {
         header('Location: index.php'); // Redirect after successful submission
     } else {

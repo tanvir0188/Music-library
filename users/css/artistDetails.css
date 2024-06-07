@@ -54,7 +54,7 @@ body {
     display: flex;
     align-items: center;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #181818;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
@@ -83,7 +83,7 @@ body {
 
 .container {
     width: auto;
-    background-color: #fff;
+    background-color: #181818;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -125,7 +125,7 @@ th, td {
 }
 
 tr:nth-child(even) {
-    background-color: #f3f3f3;
+    background-color: #121212;
 }
 
 tr:hover {
