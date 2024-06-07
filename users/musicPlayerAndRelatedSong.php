@@ -84,7 +84,7 @@ function isFavorite($user_id, $song_id, $conn)
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="search_results.php">Search</a></li>
-                <li><a href="#">Your Library</a></li>
+                <li><a href="Details.php">Your Library</a></li>
                 <li><a href="profile.php">More</a></li>
                 <li><a href="preferenceForm.php">Edit or Add preference</a></li>
             </ul>

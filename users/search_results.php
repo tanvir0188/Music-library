@@ -2,6 +2,10 @@
 session_start();
 $searchResults = isset($_SESSION['search_results']) ? $_SESSION['search_results'] : [];
 unset($_SESSION['search_results']);
+$userLoggedIn = isset($_SESSION['userid']);
+if ($userLoggedIn) {
+    $userId = $_SESSION['userid'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -84,8 +88,12 @@ unset($_SESSION['search_results']);
             </form>
         </nav>
         <div class="auth-buttons">
-            <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
-            <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
+            <?php if (!$userLoggedIn) : ?>
+                <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+                <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
+            <?php else : ?>
+                <span>Welcome, <a href="profile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a></span>
+            <?php endif; ?>
         </div>
     </header>
     <main>
