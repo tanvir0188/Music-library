@@ -166,7 +166,7 @@ include './Backend files/indexBackend.php';
             <section class="popular-artists">
             <div class="heading">
                     <h2>Popular Artists</h2>
-                    <a href="#">See more</a>
+                    <a href="popularArtists.php">See more</a>
                 </div>
 
                 <div class="artist-container">
