@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Login successful!";
             // Redirect based on usertype
             if ($usertype === 'admin') {
-                header("Location: ../admin panel/index.php");
+                echo "Login failed. This user type is not allowed.";
             } else {
                 header("Location: ../users/index.php");
             }
