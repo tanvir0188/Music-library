@@ -2,7 +2,7 @@
 session_start();
 require '../db.php';
 
-if (!isset($_SESSION['userid'])) {
+if (!isset($_SESSION['userid']) || $_SESSION['usertype']!='normal') {
     header("Location: login.html");
     exit();
 }

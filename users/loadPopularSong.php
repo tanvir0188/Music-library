@@ -30,7 +30,7 @@ function isFavorite($user_id, $song_id, $conn)
 $songs = fetchPopularSongs($offset, $limit, $conn);
 
 while ($row = $songs->fetch_assoc()) :
-    $isFavorite = isset($_SESSION['userid']) ? isFavorite($_SESSION['userid'], $row['id'], $conn) : false;
+    $isFavorite = isset($_SESSION['userid']) && ($_SESSION['usertype']=='normal') ? isFavorite($_SESSION['userid'], $row['id'], $conn) : false;
 ?>
     <tr id="song_<?php echo $row['id']; ?>">
         <td style="display: flex; align-items: center;">

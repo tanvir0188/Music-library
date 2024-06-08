@@ -140,7 +140,7 @@ include './Backend files/indexBackend.php';
 
                 <div class="playlist-container">
                     <?php while ($row = $popularSongs->fetch_assoc()) : ?>
-                        <?php $isFavorite = isset($_SESSION['userid']) ? isFavorite($_SESSION['userid'], $row['id'], $conn) : false; ?>
+                        <?php $isFavorite = isset($_SESSION['userid']) && ($_SESSION['usertype']=='normal') ? isFavorite($_SESSION['userid'], $row['id'], $conn) : false; ?>
                         <div class="playlist" id="song_<?php echo $row['id']; ?>">
                             <div class="favorite-add-to-playlist-button">
                                 <form method="post" action="insertFavorite.php">
@@ -187,7 +187,7 @@ include './Backend files/indexBackend.php';
                     <div class="artist-container">
                         <?php if ($preferences) : ?>
                             <?php foreach ($recommendations as $song) : ?>
-                                <?php $isFavorite = isset($_SESSION['userid']) ? isFavorite($_SESSION['userid'], $song['id'], $conn) : false; ?>
+                                <?php $isFavorite = isset($_SESSION['userid']) && ($_SESSION['usertype']=='normal') ? isFavorite($_SESSION['userid'], $song['id'], $conn) : false; ?>
                                 <div class="artist" id="song_<?php echo $song['id']; ?>">
                                     <div class="favorite-add-to-playlist-button">
                                         <form method="post" action="insertFavorite.php">

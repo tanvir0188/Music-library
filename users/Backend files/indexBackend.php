@@ -92,8 +92,9 @@ $popularSongs = fetchPopularSongs(5);
 $popularArtists = fetchPopularArtists(5);
 
 
-$userLoggedIn = isset($_SESSION['userid']);
+$userLoggedIn = isset($_SESSION['userid']) && $_SESSION['usertype'] == 'normal';
 $preferences = null;
+
 if ($userLoggedIn) {
     $userId = $_SESSION['userid'];
     $preferences = fetchUserPreferences($userId);

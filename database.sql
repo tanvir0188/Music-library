@@ -43,7 +43,7 @@ CREATE TABLE preferences (
     instrumentalness FLOAT,
     liveness FLOAT,
     valence FLOAT,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
 CREATE TABLE playlists (
@@ -51,26 +51,28 @@ CREATE TABLE playlists (
     name VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
+-- couldn't implement this table due to time limitation
 CREATE TABLE playlist_songs (
     playlist_id INT NOT NULL,
     song_id INT NOT NULL,
     PRIMARY KEY (playlist_id, song_id),
-    FOREIGN KEY (playlist_id) REFERENCES playlists(id) ON DELETE CASCADE,
-    FOREIGN KEY (song_id) REFERENCES songs(id)
+    FOREIGN KEY (playlist_id) REFERENCES playlists (id) ON DELETE CASCADE,
+    FOREIGN KEY (song_id) REFERENCES songs (id)
 );
 
 CREATE TABLE favorite_songs (
     user_id INT NOT NULL,
     song_id INT NOT NULL,
     PRIMARY KEY (user_id, song_id),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (song_id) REFERENCES songs(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (song_id) REFERENCES songs (id) ON DELETE CASCADE
 );
 
-DELIMITER //
+DELIMITER / /
+
 CREATE TRIGGER increment_popularity AFTER INSERT ON favorite_songs
 FOR EACH ROW
 BEGIN
@@ -78,10 +80,13 @@ BEGIN
     SET popularity = popularity + 1
     WHERE id = NEW.song_id;
 END;
-//
-DELIMITER ;
 
-DELIMITER //
+/ /
+
+DELIMITER;
+
+DELIMITER / /
+
 CREATE TRIGGER decrement_popularity AFTER DELETE ON favorite_songs
 FOR EACH ROW
 BEGIN
@@ -89,8 +94,7 @@ BEGIN
     SET popularity = popularity - 1
     WHERE id = OLD.song_id;
 END;
-//
-DELIMITER ;
 
+/ /
 
-
+DELIMITER;
