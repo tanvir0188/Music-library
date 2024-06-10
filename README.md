@@ -36,13 +36,13 @@ To set up the Music Library project locally, follow these steps:
 
 __Clone the repository:__
 
---git clone https://github.com/yourusername/music-library.git
+--git clone https://github.com/tanvir0188/music-library.git
 
 --cd music-library
 
 __Configure the Database:__
 
-Ensure you have a local server running (e.g., XAMPP, WAMP, or MAMP). Go to Mysql in phpmyadmin. create a database "music_library". Import the provided SQL file into your MySQL database. Go to the data file in the file directroy. Find music_library.csv and insert it into the the songs table in the database(music_library)
+Ensure you have a local server running (e.g., XAMPP, WAMP, or MAMP). Go to Mysql in phpmyadmin. create a database "music_library". Import the provided SQL file into your MySQL database. Go to the data file in the file directroy. Find music_library.csv and insert it into the songs table in the database(music_library)
 
 Place the project files in the server's root directory (e.g., htdocs for XAMPP).
 Access the Application:
@@ -61,7 +61,7 @@ Open your web browser and navigate to http://localhost/music-library.
 
 ![App Screenshot](https://github.com/tanvir0188/Music-library/blob/main/demo/admin/Screenshot%20(280).png)
 
-### Front page
+### Frontpage
 ![App Screenshot](https://github.com/tanvir0188/Music-library/blob/main/demo/admin/Screenshot%20(273).png)
 
 ### Add your songs
@@ -83,19 +83,19 @@ Open your web browser and navigate to http://localhost/music-library.
 
 ## User Panel
 
-### Front page
+### Frontpage
 ![App Screenshot](https://github.com/tanvir0188/Music-library/blob/main/demo/user/Screenshot%20(283).png)
 
 ### Login page
 ![App Screenshot](https://github.com/tanvir0188/Music-library/blob/main/demo/user/Screenshot%20(281).png)
 
-### Sign up page
+### Sign-up page
 ![App Screenshot](https://github.com/tanvir0188/Music-library/blob/main/demo/user/Screenshot%20(282).png)
 
 ### Play a song
 ![App Screenshot](https://github.com/tanvir0188/Music-library/blob/main/demo/user/Screenshot%20(284).png)
 
-### Search a song
+### Search for a song
 ![App Screenshot](https://github.com/tanvir0188/Music-library/blob/main/demo/user/Screenshot%20(293).png)
 
 ### Songs by any selected artist
